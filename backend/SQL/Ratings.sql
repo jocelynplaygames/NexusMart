@@ -1,0 +1,9 @@
+CREATE TABLE Ratings (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    entityId INT NOT NULL,
+    entityType ENUM('product', 'seller') NOT NULL,
+    totalRating INT NOT NULL,
+    numRatings INT NOT NULL,
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);

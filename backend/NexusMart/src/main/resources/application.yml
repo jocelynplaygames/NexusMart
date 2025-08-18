@@ -1,0 +1,48 @@
+server:
+  port: 8080
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:7080/realms/NexusMart
+  application:
+    name: "NexusMart"
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/ecommerce
+    username: root
+    password: wxwwxw123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  sql:
+    init:
+      mode: always
+
+keycloak:
+  auth-server-url: http://localhost:7080
+  realm: NexusMart
+  client-id: nexusmart-ecommerce-monolith-client
+  client-secret: 4M8WYjvd1HV1WLvMGxZUhV60IKADbIxH
+  master-id: nexusmart-ecommerce-monolith-client
+  master-secret: kHn11XuL8pytqXTW2eQiK6l6VlT8DYlc
+  admin-username: admin
+  admin-password: admin
+
+cloudinary:
+  cloud-name: dl7atizzb
+  api-key: 145491984531442
+  api-secret: 1iZYfLLIkyl9QGDTreYx3r-5Mcc
+  avatar-upload-folder: NexusMart/UserAvatar
+  category-upload-folder: NexusMart/Category
+  item-upload-folder: NexusMart/Item
+
+payment:
+  service:
+    url:
+      http://localhost:8080/api/payment

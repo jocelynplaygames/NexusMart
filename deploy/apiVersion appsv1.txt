@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-java-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-java-app
+  template:
+    metadata:
+      labels:
+        app: my-java-app
+    spec:
+      containers:
+      - name: my-java-app
+        image: my-java-app:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: ENV_VAR_NAME
+          value: "value"

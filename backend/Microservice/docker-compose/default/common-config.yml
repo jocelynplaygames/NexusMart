@@ -1,0 +1,29 @@
+services:
+  network-deploy-service:
+    networks:
+      - NexusMart
+
+  microservice-base-config:
+    extends:
+      service: network-deploy-service
+
+  microservice-configserver-config:
+    extends:
+      service: microservice-base-config
+    environment:
+      SPRING_PROFILES_ACTIVE: "docker"
+      SPRING_CONFIG_IMPORT: "configserver:http://configserver:8090/"
+
+  microservice-eureka-config:
+    extends:
+      service: microservice-configserver-config
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eurekaserver1:8761/eureka/,http://eurekaserver2:8762/eureka/,http://eurekaserver3:8763/eureka/"
+#      keycloak.auth-server-url: "keycloak:http://keycloak:7080"
+#      keycloak.realm: "NexusMart"
+#      keycloak.client-id: "nexusmart-ecommerce"
+#      keycloak.client-secret: "g5HFcWL6MHBFnrAe9FO0HhlMipOHzFNZ"
+#      keycloak.master-id: "admin_cli"
+#      keycloak.master-secret: ""
+#      keycloak.admin-username: "admin"
+#      keycloak.admin-password: "admin"
