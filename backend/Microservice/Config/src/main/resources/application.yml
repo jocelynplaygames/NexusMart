@@ -1,3 +1,17 @@
+# File: backend/Microservice/Config/src/main/resources/application.yml
+
+# Spring Cloud Config Server 是一个配置中心服务，用于集中管理微服务应用的配置文件。
+# Git配置仓库，提供配置，比如kafka:bootstrap-servers
+# 本地开发时，Config Server会从Git仓库拉取配置
+
+# 1. 微服务启动->2. 读取本地application.yml
+# ->3. 发现config.import配置
+# ->4. 连接Config Server (http://localhost:8090)
+# ->5. Config Server从Git仓库拉取配置
+# ->6. 返回spring.kafka.bootstrap-servers值
+# ->7. @Value注解注入配置值
+
+
 spring:
   application:
     name: "configserver"
@@ -12,6 +26,15 @@ spring:
           timeout: 5
           clone-on-start: true
           force-pull: true
+
+
+# Config Server从Git仓库拉取配置的代码实现：
+# 启动类：@EnableConfigServer注解启用配置服务器功能
+# 配置文件：application.yml中配置Git仓库信息
+# 依赖：spring-cloud-config-server依赖提供Git操作功能
+# 自动配置：Spring Boot自动配置Git仓库连接器和配置加载器
+# Git操作：自动执行克隆、拉取、配置文件查找等操作
+# 配置提供：通过REST API向微服务提供配置
 
 management:
   endpoints:

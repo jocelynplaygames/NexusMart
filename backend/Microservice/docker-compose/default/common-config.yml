@@ -1,23 +1,44 @@
+# File: backend/Microservice/docker-compose/default/common-config.yml
+# Docker Compose 的服务配置片段，用于定义微服务架构中多个服务的部署规则（如网络、环境变量、继承关系等）
 services:
+  # 定义一个名为 network-deploy-service 的服务，用于配置网络
   network-deploy-service:
     networks:
       - NexusMart
+# 定义一个 “基础网络配置模板”，指定所有继承它的服务都加入名为 NexusMart 的网络
+# 微服务之间需要通信（如订单服务调用支付服务）
+# 加入同一个网络（NexusMart）可以让服务通过服务名（而非 IP）互相访问（如 http://configserver:8090）
 
+
+
+  # 定义一个名为 microservice-base-config 的服务，用于配置基础服务
   microservice-base-config:
+    # 继承 network-deploy-service 的网络配置
     extends:
       service: network-deploy-service
 
+  # 定义一个名为 microservice-configserver-config 的服务，用于配置配置服务器
   microservice-configserver-config:
+    # 继承 microservice-base-config 的配置
     extends:
       service: microservice-base-config
+    # 设置环境变量
     environment:
+      # 设置活动配置为 docker
+      #指定 Spring 启动时使用 application-docker.yml 配置文件（区分开发、测试、生产环境的配置）。
       SPRING_PROFILES_ACTIVE: "docker"
+      # 告诉微服务 “从地址为 http://configserver:8090 的配置中心获取配置”（configserver 是配置中心服务的名称，通过网络 NexusMart 解析）。
       SPRING_CONFIG_IMPORT: "configserver:http://configserver:8090/"
 
+
+  # 定义一个名为 microservice-eureka-config 的服务，用于配置 Eureka 服务
   microservice-eureka-config:
+    # 继承 microservice-configserver-config 的配置
     extends:
+      # 继承 microservice-configserver-config 的配置
       service: microservice-configserver-config
     environment:
+      # 设置 Eureka 服务地址为 http://eurekaserver1:8761/eureka/,http://eurekaserver2:8762/eureka/,http://eurekaserver3:8763/eureka/
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eurekaserver1:8761/eureka/,http://eurekaserver2:8762/eureka/,http://eurekaserver3:8763/eureka/"
 #      keycloak.auth-server-url: "keycloak:http://keycloak:7080"
 #      keycloak.realm: "NexusMart"

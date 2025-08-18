@@ -16,6 +16,7 @@ import java.util.Map;
 @Configuration
 public class KafkaProducerConfig {
 
+//backend/Microservice/docker-compose/default/docker-compose.yml从Docker Compose文件可以看到Kafka集群的配置
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;
 

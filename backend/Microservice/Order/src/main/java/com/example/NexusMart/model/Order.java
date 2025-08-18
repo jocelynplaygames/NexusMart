@@ -41,7 +41,5 @@ public class Order extends BaseEntity {
 
     @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> orderItems;
-
-    // Getters and setters are inherited from BaseEntity
 }
 
