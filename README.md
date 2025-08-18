@@ -248,7 +248,7 @@ Databases (MySQL Master-Slave)
 │  └── 📁 nginx/                    📁 redis/                                                                   │
 │      └── nginx.conf               └── redis.conf                                                             │
 └─────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
-
+```
 ### 🔄 **Frontend-Backend Collaboration Mapping**
 
 #### 1. **User Management Module**
