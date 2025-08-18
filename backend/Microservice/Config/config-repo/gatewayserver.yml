@@ -1,0 +1,14 @@
+server:
+  port: 8080
+
+keycloak:
+  url: http://localhost:7080
+
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: "http://localhost:8761/eureka/,http://localhost:8762/eureka/,http://localhost:8763/eureka/"

@@ -1,0 +1,23 @@
+server:
+  port: 8080
+
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: "http://eurekaserver1:8761/eureka/,http://eurekaserver2:8762/eureka/,http://eurekaserver3:8763/eureka/"
+
+keycloak:
+  url: http://keycloak:8080
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: "http://keycloak:8080/realms/Nexusmart-ECommerce"
+          jwk-set-uri: "http://keycloak:8080/realms/Nexusmart-ECommerce/protocol/openid-connect/certs"
+

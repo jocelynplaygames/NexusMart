@@ -1,0 +1,36 @@
+build:
+  version: "1.0"
+
+spring:
+  datasource:
+    master:
+      jdbc-url: jdbc:mysql://10.0.0.212:3307/userservice
+      username: root
+      password: your_password
+      driver-class-name: com.mysql.cj.jdbc.Driver
+    slave:
+      jdbc-url: jdbc:mysql://10.0.0.212:3308/userservice
+      username: root
+      password: your_password
+      driver-class-name: com.mysql.cj.jdbc.Driver
+
+itemservice:
+  url: http://item-svc.default.svc.cluster.local:8040/api/item
+    
+keycloak:
+  auth-server-url: "http://keycloak-svc:7080"
+  realm: "Nexusmart-ECommerce"
+  client-id: "nexusmart-ecommerce"
+  client-secret: "g5HFcWL6MHBFnrAe9FO0HhlMipOHzFNZ"
+  master-id: "admin-cli"
+  master-secret: ""
+  admin-username: "admin"
+  admin-password: "admin"
+
+user:
+  message: "This is YourProject's user micro service"
+  contactDetails:
+    name: "Your Name - Developer"
+    email: "your-email@example.com"
+  onCallSupport:
+    your-contact-info

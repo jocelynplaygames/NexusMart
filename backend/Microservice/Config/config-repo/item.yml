@@ -1,0 +1,72 @@
+build:
+  version: "1.0"
+
+spring:
+  datasource:
+    master:
+      jdbc-url: jdbc:mysql://localhost:3311/itemservice
+      username: root
+      password: your_password
+      driver-class-name: com.mysql.cj.jdbc.Driver
+    slave:
+      jdbc-url: jdbc:mysql://localhost:3312/itemservice
+      username: root
+      password: your_password
+      driver-class-name: com.mysql.cj.jdbc.Driver
+  data:
+    redis:
+      sentinel:
+        master: redis-master
+        nodes: "redis-sentinel1:26379,redis-sentinel2:26380,redis-sentinel3:26381"
+      password: your_password
+      lettuce:
+        pool:
+          max-active: 10
+          max-idle: 5
+          min-idle: 1
+          test-on-borrow: true
+
+search:
+  items:
+    cache:
+      refresh:
+        rate: 20000
+      initial:
+        delay: 10000
+        
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/,http://localhost:8762/eureka/,http://localhost:8763/eureka/
+      
+userservice:
+  url: http://localhost:8070/api/user
+
+orderservice:
+  url: http://localhost:8050/api/orders
+
+feedbackservice:
+  url: http://localhost:8070/api/feedback
+
+ratingservice:
+  url: http://localhost:8070/api/ratings
+
+keycloak:
+  auth-server-url: "http://localhost:7080"
+  realm: "Nexusmart-ECommerce"
+  client-id: "nexusmart-ecommerce"
+  client-secret: "g5HFcWL6MHBFnrAe9FO0HhlMipOHzFNZ"
+  master-id: "admin-cli"
+  master-secret: ""
+  admin-username: "admin"
+  admin-password: "admin"
+
+item:
+  message: "This is Nexusmart-ECommerce's item  micro service"
+  contactDetails:
+    name: "Your Name - Developer"
+    email: "your-email@example.com"
+  onCallSupport:
+    your-contact-info
+
+

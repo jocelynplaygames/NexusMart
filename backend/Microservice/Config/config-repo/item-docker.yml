@@ -1,0 +1,73 @@
+build:
+  version: "1.0"
+
+spring:
+  datasource:
+    master:
+      jdbc-url: jdbc:mysql://itemservice-master:3306/itemservice
+      username: root
+      password: your_password
+      driver-class-name: com.mysql.cj.jdbc.Driver
+    slave:
+      jdbc-url: jdbc:mysql://itemservice-slave:3306/itemservice
+      username: root
+      password: your_password
+      driver-class-name: com.mysql.cj.jdbc.Driver
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: "http://keycloak:8080/realms/Nexusmart-ECommerce"
+          jwk-set-uri: "http://keycloak:8080/realms/Nexusmart-ECommerce/protocol/openid-connect/certs"
+  data:
+    redis:
+      sentinel:
+        master: redis-master
+        nodes: "redis-sentinel1:26379,redis-sentinel2:26380,redis-sentinel3:26381"
+      password: your_password
+      port: 6379
+      host: redis-master
+      lettuce:
+        pool:
+          max-active: 10
+          max-idle: 5
+          min-idle: 1
+          test-on-borrow: true
+
+search:
+  items:
+    cache:
+      refresh:
+        rate: 20000
+      initial:
+        delay: 10000
+
+userservice:
+  url: http://user:8070/api/user
+
+orderservice:
+  url: http://order:8050/api/orders
+
+feedbackservice:
+  url: http://user:8070/api/feedback
+
+ratingservice:
+  url: http://user:8070/api/ratings
+
+keycloak:
+  auth-server-url: "http://keycloak:8080"
+  realm: "Nexusmart-ECommerce"
+  client-id: "nexusmart-ecommerce"
+  client-secret: "g5HFcWL6MHBFnrAe9FO0HhlMipOHzFNZ"
+  master-id: "admin-cli"
+  master-secret: ""
+  admin-username: "admin"
+  admin-password: "admin"
+
+item:
+  message: "This is Nexusmart-ECommerce's item  micro service"
+  contactDetails:
+    name: "Your Name - Developer"
+    email: "your-email@example.com"
+  onCallSupport:
+    your-contact-info

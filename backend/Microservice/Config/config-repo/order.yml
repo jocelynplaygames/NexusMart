@@ -1,0 +1,73 @@
+build:
+  version: "1.0"
+
+spring:
+  datasource:
+    master:
+      jdbc-url: jdbc:mysql://localhost:3309/orderservice
+      username: root
+      password: your_password
+      driver-class-name: com.mysql.cj.jdbc.Driver
+    slave:
+      jdbc-url: jdbc:mysql://localhost:3310/orderservice
+      username: root
+      password: wxwwx123
+      driver-class-name: com.mysql.cj.jdbc.Driver
+  kafka:
+    bootstrap-servers: localhost:9092,localhost:9093,localhost:9094
+    consumer:
+      group-id: order-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      enable-auto-commit: false
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      retries: 3
+      acks: all
+    listener:
+      ack-mode: manual
+
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/,http://localhost:8762/eureka/,http://localhost:8763/eureka/
+
+payment:
+  service:
+    url: http://localhost:8060/api/payment
+
+itemservice:
+  url: http://localhost:8040/api/item
+
+userservice:
+  url: http://localhost:8070/api/user
+
+cardservice:
+  url: http://localhost:8070/api/cards
+
+orderservice:
+  url: http://localhost:8050/api/orders
+
+cartservice:
+  url: http://localhost:8070/api/cart
+
+keycloak:
+  auth-server-url: "http://localhost:7080"
+  realm: "Nexusmart-ECommerce"
+  client-id: "nexusmart-ecommerce"
+  client-secret: "g5HFcWL6MHBFnrAe9FO0HhlMipOHzFNZ"
+  master-id: "admin-cli"
+  master-secret: ""
+  admin-username: "admin"
+  admin-password: "admin"
+
+order:
+  message: "This is Nexusmart-ECommerce's order micro service"
+  contactDetails:
+    name: "Your Name - Developer"
+    email: "your-email@example.com"
+  onCallSupport:
+    your-contact-info

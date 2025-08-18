@@ -1,0 +1,49 @@
+build:
+  version: "1.0"
+
+keycloak:
+  auth-server-url: "http://keycloak-svc:7080"
+  realm: "Nexusmart-ECommerce"
+  client-id: "nexusmart-ecommerce"
+  client-secret: "g5HFcWL6MHBFnrAe9FO0HhlMipOHzFNZ"
+  master-id: "admin-cli"
+  master-secret: ""
+  admin-username: "admin"
+  admin-password: "admin"
+
+spring:
+  kafka:
+    bootstrap-servers: 10.0.0.212:9092,10.0.0.212:9093,10.0.0.212:9094
+    consumer:
+      group-id: payment-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      enable-auto-commit: false
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      retries: 3
+      acks: all
+    listener:
+      ack-mode: manual
+    topic:
+      payment-result: paymentResultTopic
+  datasource:
+    url: jdbc:mysql://10.0.0.212:3313/paymentservice
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: root
+    password: your_password
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+payment:
+  message: "This is Nexusmart-ECommerce's payment micro service"
+  contactDetails:
+    name: "Your Name - Developer"
+    email: "your-email@example.com"
+  onCallSupport:
+    your-contact-info

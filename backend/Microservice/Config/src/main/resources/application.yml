@@ -1,17 +1,38 @@
+# File: backend/Microservice/Config/src/main/resources/application.yml
+
+# Spring Cloud Config Server 是一个配置中心服务，用于集中管理微服务应用的配置文件。
+# 本地文件系统配置，提供配置，比如kafka:bootstrap-servers
+# 本地开发时，Config Server会从本地文件系统读取配置
+
+# 1. 微服务启动->2. 读取本地application.yml
+# ->3. 发现config.import配置
+# ->4. 连接Config Server (http://localhost:8090)
+# ->5. Config Server从本地文件系统读取配置
+# ->6. 返回spring.kafka.bootstrap-servers值
+# ->7. @Value注解注入配置值
+
+
 spring:
   application:
     name: "configserver"
   profiles:
-    active: git
+    active: native
   cloud:
     config:
       server:
-        git:
-          uri: "https://github.com/xianwew/NexusMart-Config.git"
-          default-label: main
-          timeout: 5
-          clone-on-start: true
-          force-pull: true
+        native:
+          search-locations: 
+            - file:./config-repo
+          fail-on-error: false
+
+
+# Config Server从本地文件系统读取配置的代码实现：
+# 启动类：@EnableConfigServer注解启用配置服务器功能
+# 配置文件：application.yml中配置本地文件系统路径
+# 依赖：spring-cloud-config-server依赖提供本地文件操作功能
+# 自动配置：Spring Boot自动配置本地文件系统连接器和配置加载器
+# 文件操作：自动执行配置文件查找、读取等操作
+# 配置提供：通过REST API向微服务提供配置
 
 management:
   endpoints:

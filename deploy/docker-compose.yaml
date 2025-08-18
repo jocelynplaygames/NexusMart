@@ -60,7 +60,7 @@ services:
     image: mysql:latest
     container_name: userservice-master
     environment:
-      MYSQL_ROOT_PASSWORD: wxwwxw123
+      MYSQL_ROOT_PASSWORD: your_password
       MYSQL_DATABASE: userservice
       MYSQL_ALLOW_EMPTY_PASSWORD: true
     ports:
@@ -80,7 +80,7 @@ services:
     image: mysql:latest
     container_name: userservice-slave
     environment:
-      MYSQL_ROOT_PASSWORD: wxwwxw123
+      MYSQL_ROOT_PASSWORD: your_password
       MYSQL_DATABASE: userservice
       MYSQL_ALLOW_EMPTY_PASSWORD: true
     ports:
@@ -103,7 +103,7 @@ services:
     image: mysql:latest
     container_name: orderservice-master
     environment:
-      MYSQL_ROOT_PASSWORD: wxwwxw123
+      MYSQL_ROOT_PASSWORD: your_password
       MYSQL_DATABASE: orderservice
       MYSQL_ALLOW_EMPTY_PASSWORD: true
     ports:
@@ -123,7 +123,7 @@ services:
     image: mysql:latest
     container_name: orderservice-slave
     environment:
-      MYSQL_ROOT_PASSWORD: wxwwxw123
+      MYSQL_ROOT_PASSWORD: your_password
       MYSQL_DATABASE: orderservice
       MYSQL_ALLOW_EMPTY_PASSWORD: true
     ports:
@@ -146,7 +146,7 @@ services:
     image: mysql:latest
     container_name: itemservice-master
     environment:
-      MYSQL_ROOT_PASSWORD: wxwwxw123
+      MYSQL_ROOT_PASSWORD: your_password
       MYSQL_DATABASE: itemservice
       MYSQL_ALLOW_EMPTY_PASSWORD: true
     ports:
@@ -166,7 +166,7 @@ services:
     image: mysql:latest
     container_name: itemservice-slave
     environment:
-      MYSQL_ROOT_PASSWORD: wxwwxw123
+      MYSQL_ROOT_PASSWORD: your_password
       MYSQL_DATABASE: itemservice
       MYSQL_ALLOW_EMPTY_PASSWORD: true
     ports:
@@ -191,7 +191,7 @@ services:
     ports:
       - "3313:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: wxwwxw123
+      MYSQL_ROOT_PASSWORD: your_password
       MYSQL_DATABASE: paymentservice
     volumes:
       - paymentservice_failed_messages_data:/var/lib/mysql
@@ -208,7 +208,7 @@ services:
     container_name: redis-master
     ports:
       - "6379:6379"
-    command: redis-server --requirepass wxwwxw123 --appendonly yes
+    command: redis-server --requirepass your_password --appendonly yes
 
   redis-sentinel1:
     image: redis:7.0.9
@@ -252,7 +252,7 @@ services:
     container_name: redis-slave1
     ports:
       - "6380:6379"
-    command: redis-server --slaveof redis-master 6379 --masterauth wxwwxw123 --requirepass wxwwxw123
+    command: redis-server --slaveof redis-master 6379 --masterauth your_password --requirepass your_password
     depends_on:
       - redis-master
 
@@ -262,6 +262,6 @@ services:
     container_name: redis-slave2
     ports:
       - "6381:6379"
-    command: redis-server --slaveof redis-master 6379 --masterauth wxwwxw123 --requirepass wxwwxw123
+    command: redis-server --slaveof redis-master 6379 --masterauth your_password --requirepass your_password
     depends_on:
       - redis-master

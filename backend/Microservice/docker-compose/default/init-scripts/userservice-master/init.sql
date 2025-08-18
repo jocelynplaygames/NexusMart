@@ -1,7 +1,7 @@
 CREATE DATABASE IF NOT EXISTS userservice;
 
-ALTER USER 'root'@'localhost' IDENTIFIED BY 'wxwwxw123';
-ALTER USER 'root'@'%' IDENTIFIED BY 'wxwwxw123';
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'your_password';
+ALTER USER 'root'@'%' IDENTIFIED BY 'your_password';
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'%';
 FLUSH PRIVILEGES;
 
