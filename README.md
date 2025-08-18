@@ -116,33 +116,413 @@ Databases (MySQL Master-Slave)
 
 ## 📁 Project Structure
 
+### 🏗️ **Overall Architecture Overview**
+
 ```
-NexusMart/
-├── 🎨 frontend/                          # React frontend application
-│   ├── src/
-│   │   ├── App/
-│   │   │   ├── Components/              # Reusable UI components
-│   │   │   ├── Pages/                   # Page components
-│   │   │   ├── Redux/                   # State management
-│   │   │   └── Service/                 # API service layer
-│   │   └── App.js                       # Main application component
-│   └── package.json
-├── ⚙️ backend/                           # Backend microservices
-│   ├── Microservice/
-│   │   ├── User/                        # User management service
-│   │   ├── Item/                        # Product management service
-│   │   ├── Order/                       # Order processing service
-│   │   ├── Payment/                     # Payment processing service
-│   │   ├── Gateway/                     # API gateway service
-│   │   ├── Config/                      # Configuration service
-│   │   ├── Eureka/                      # Service discovery
-│   │   └── docker-compose/              # Container orchestration
-│   ├── SQL/                             # Database schemas & data
-│   └── SystemDesign/                    # Architecture diagrams
-├── 🚀 deploy/                           # Deployment configurations
-│   ├── docker-compose.yaml              # Local development setup
-│   └── template.yaml                    # Kubernetes deployment template
-└── 📸 productImages/                    # Product images
+┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│                                    NexusMart E-commerce Platform - Microservices Architecture               │
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│                                           🎨 Frontend Layer (React + Redux)                                 │
+├─────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│  📁 frontend/                                                                                                │
+│  ├── 📁 src/App/                                                                                            │
+│  │   ├── 📁 Pages/                    📁 Components/                   📁 service/                          │
+│  │   │   ├── HomePage/                ├── Header/                      ├── UserService.js                   │
+│  │   │   ├── BrowsingPage/            ├── LoginDialog/                 ├── ItemService.js                   │
+│  │   │   ├── ItemDetailsPage/         ├── SearchBar/                   ├── OrderService.js                  │
+│  │   │   ├── CartPage/                ├── CartPage/                    ├── PaymentService.js                │
+│  │   │   ├── CheckoutPage/            ├── CheckoutPage/                ├── CartService.js                   │
+│  │   │   ├── UserProfilePage/         ├── ItemDetailsPage/             ├── FeedbackService.js               │
+│  │   │   ├── SellerProfilePage/       ├── UserProfilePage/             ├── SearchService.js                 │
+│  │   │   ├── SellPage/                ├── SellerProfilePage/           ├── ListingsService.js               │
+│  │   │   ├── EditItemPage/            ├── SellPage/                    ├── CloudinaryService.js             │
+│  │   │   └── UserReceiptPage/         ├── Feedback/                    ├── RatingService.js                 │
+│  │   │                                ├── SnackBars/                   ├── RecommendationService.js         │
+│  │   │                                ├── ConfirmDialog/               ├── ShippingService.js               │
+│  │   │                                ├── Buttons/                     ├── CategoryService.js               │
+│  │   │                                ├── Footer/                      ├── NotificationService.js           │
+│  │   │                                └── MUI/                         └── AxiosConfig.js                   │
+│  │   ├── 📁 Auth/                     📁 redux/                        📁 assets/                           │
+│  │   │   ├── keycloak.js              ├── store.js                     └── (Static Resources)              │
+│  │   │   └── AuthContext.js           ├── slices/                                                          │
+│  │   │                                │   ├── userSlice.js                                                      │
+│  │   │                                │   ├── cartSlice.js                                                       │
+│  │   │                                │   ├── itemSlice.js                                                       │
+│  │   │                                │   └── orderSlice.js                                                      │
+│  │   │                                └── middleware/                                                          │
+│  │   └── App.js (Main Application)                                                                           │
+│  └── package.json                                                                                            │
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+                                    ↕️ HTTP/WebSocket Communication
+┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│                                        🌐 API Gateway Layer (Spring Cloud Gateway)                          │
+├─────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│  📁 backend/Microservice/Gateway/                                                                             │
+│  ├── 📁 src/main/java/com/NexusMart/gatewayserver/                                                           │
+│  │   ├── GatewayApplication.java              # Gateway Startup Class                                       │
+│  │   ├── 📁 config/                                                                                          │
+│  │   │   ├── SecurityConfig.java              # Security Configuration                                      │
+│  │   │   └── CorsConfig.java                  # CORS Configuration                                          │
+│  │   └── 📁 controller/                                                                                      │
+│  │       └── FallbackController.java          # Circuit Breaker Controller                                  │
+│  └── 📁 src/main/resources/                                                                                  │
+│      └── application.yml                      # Gateway Configuration                                       │
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+                                    ↕️ Service Discovery & Routing
+┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│                                        🔧 Microservices Layer (Spring Boot)                                 │
+├─────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│  📁 backend/Microservice/                                                                                    │
+│  ├── 📁 User/                    📁 Item/                    📁 Order/                    📁 Payment/        │
+│  │   ├── UserApplication.java    ├── ItemApplication.java    ├── OrderApplication.java    ├── PaymentApplication.java │
+│  │   ├── 📁 controller/          ├── 📁 controller/          ├── 📁 controller/           ├── 📁 controller/ │
+│  │   │   └── UserController.java │   │   └── ItemController.java │   │   └── OrderController.java │   │   └── PaymentController.java │
+│  │   ├── 📁 service/             ├── 📁 service/             ├── 📁 service/              ├── 📁 service/  │
+│  │   │   └── UserService.java    │   │   └── ItemService.java │   │   └── OrderService.java │   │   └── PaymentService.java │
+│  │   ├── 📁 repository/          ├── 📁 repository/          ├── 📁 repository/           ├── 📁 repository/ │
+│  │   │   └── UserRepository.java │   │   └── ItemRepository.java │   │   └── OrderRepository.java │   │   └── PaymentRepository.java │
+│  │   ├── 📁 model/               ├── 📁 model/               ├── 📁 model/                ├── 📁 model/    │
+│  │   │   ├── User.java           │   │   ├── Item.java        │   │   ├── Order.java        │   │   ├── Payment.java │
+│  │   │   └── BaseEntity.java     │   │   └── BaseEntity.java  │   │   ├── BaseEntity.java   │   │   └── BaseEntity.java │
+│  │   ├── 📁 dto/                 ├── 📁 dto/                 ├── 📁 dto/                  ├── 📁 dto/      │
+│  │   ├── 📁 mapper/              ├── 📁 mapper/              ├── 📁 mapper/               ├── 📁 mapper/   │
+│  │   ├── 📁 config/              ├── 📁 config/              ├── 📁 config/               ├── 📁 config/   │
+│  │   ├── 📁 audit/               ├── 📁 audit/               ├── 📁 audit/                ├── 📁 audit/    │
+│  │   │   └── AuditAwareImpl.java │   │   └── AuditAwareImpl.java │   │   └── AuditAwareImpl.java │   │   └── AuditAwareImpl.java │
+│  │   ├── 📁 jwt/                 ├── 📁 jwt/                 ├── 📁 consumer/             ├── 📁 consumer/ │
+│  │   ├── 📁 utils/               ├── 📁 utils/               │   │   └── OrderConsumer.java │   │   └── PaymentConsumer.java │
+│  │   ├── 📁 exception/           ├── 📁 exception/           ├── 📁 producer/             ├── 📁 producer/ │
+│  │   └── 📁 pojoClass/           ├── 📁 pojoClass/           │   │   └── OrderProducer.java │   │   └── PaymentProducer.java │
+│  │                               ├── 📁 aspect/              ├── 📁 utils/                ├── 📁 utils/    │
+│  │                               ├── 📁 validator/           └── 📁 pojoClass/            └── 📁 pojoClass/ │
+│  │                               └── 📁 annotation/                                                                        │
+│  │                                                                                                                          │
+│  ├── 📁 Eureka/                  📁 Config/                                                                                │
+│  │   ├── EurekaApplication.java  ├── ConfigApplication.java                                                                │
+│  │   └── 📁 config/              └── 📁 config/                                                                            │
+│  │       └── EurekaServerConfig.java                                                                                       │
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+                                    ↕️ Message Queue Communication (Kafka)
+┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│                                        📊 Data Layer (MySQL + Redis)                                        │
+├─────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│  📁 backend/SQL/                                                                                             │
+│  ├── 📁 Master/                    📁 Slave/                    📁 Redis/                                   │
+│  │   ├── users.sql                 ├── users.sql                ├── sentinel.conf                           │
+│  │   ├── items.sql                 ├── items.sql                └── redis.conf                              │
+│  │   ├── orders.sql                ├── orders.sql                                                           │
+│  │   ├── payments.sql              ├── payments.sql                                                         │
+│  │   └── cart.sql                  └── cart.sql                                                             │
+│  └── 📁 docker-compose/                                                                                     │
+│      └── default/docker-compose.yml                                                                         │
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+                                    ↕️ Monitoring Data Flow
+┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│                                    📈 Monitoring & Observability Layer                                      │
+├─────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│  📁 backend/Microservice/docker-compose/observability/                                                      │
+│  ├── 📁 prometheus/                📁 grafana/                 📁 loki/                    📁 promtail/     │
+│  │   └── prometheus.yml            ├── datasource.yml          ├── loki-config.yaml        └── promtail-local-config.yaml │
+│  │                                 └── dashboards/             └── docker-compose.yml       │
+│  │                                                                                           │
+│  ├── 📁 tempo/                    📁 nginx/                   📁 redis/                    📁 minio/       │
+│  │   └── tempo.yml                ├── nginx.conf              ├── sentinel.conf            └── docker-compose.yml │
+│  │                                └── docker-compose.yml      └── redis.conf               │
+│  └── 📁 kafka/                    📁 zookeeper/                                                                             │
+│      ├── docker-compose.yml       └── docker-compose.yml                                                                    │
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+                                    ↕️ Deployment Configuration
+┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│                                        🚀 Deployment Layer (Docker + Kubernetes)                            │
+├─────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│  📁 deploy/                                                                                                  │
+│  ├── docker-compose.yaml          # Local Development Environment                                           │
+│  ├── template.yaml                # Kubernetes Deployment Template                                          │
+│  └── apiVersion appsv1.txt        # K8s API Version Documentation                                           │
+│                                                                                                               │
+│  📁 backend/Microservice/docker-compose/                                                                     │
+│  ├── 📁 default/                  📁 observability/                                                          │
+│  │   └── docker-compose.yml       └── (Monitoring Components Config)                                        │
+│  └── 📁 nginx/                    📁 redis/                                                                   │
+│      └── nginx.conf               └── redis.conf                                                             │
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+```
+### 🔄 **Frontend-Backend Collaboration Mapping**
+
+#### 1. **User Management Module**
+```
+Frontend: UserProfilePage/ + UserService.js
+  ↓ HTTP Request
+Gateway: GatewayApplication.java (Route to /api/user/**)
+  ↓ Forward Request
+Backend: UserController.java → UserService.java → UserRepository.java
+  ↓ Database Operation
+Data Layer: MySQL (users table) + Redis (cache)
+```
+
+#### 2. **Item Management Module**
+```
+Frontend: ItemDetailsPage/ + ItemService.js + ListingsService.js
+  ↓ HTTP Request
+Gateway: GatewayApplication.java (Route to /api/items/**)
+  ↓ Forward Request
+Backend: ItemController.java → ItemService.java → ItemRepository.java
+  ↓ Database Operation
+Data Layer: MySQL (items table) + Redis (cache)
+```
+
+#### 3. **Order Management Module (SAGA Pattern)**
+```
+Frontend: CheckoutPage/ + OrderService.js + CartService.js
+  ↓ HTTP Request
+Gateway: GatewayApplication.java (Route to /api/orders/**)
+  ↓ Forward Request
+Backend: OrderController.java → OrderService.java
+  ↓ Message Sending
+Kafka: OrderProducer.java → PaymentConsumer.java
+  ↓ Payment Processing
+Backend: PaymentController.java → PaymentService.java
+  ↓ Result Return
+Kafka: PaymentProducer.java → OrderConsumer.java
+  ↓ Status Update
+WebSocket: OrderStatusWebSocketHandler.java → Frontend Real-time Notification
+```
+
+#### 4. **Shopping Cart Module**
+```
+Frontend: CartPage/ + CartService.js
+  ↓ HTTP Request
+Gateway: GatewayApplication.java (Route to /api/cart/**)
+  ↓ Forward Request
+Backend: CartController.java → CartService.java → CartRepository.java
+  ↓ Database Operation
+Data Layer: Redis (cart data)
+```
+
+#### 5. **Authentication & Authorization Module**
+```
+Frontend: LoginDialog/ + AuthContext.js + keycloak.js
+  ↓ OAuth2 Request
+Keycloak: Identity Authentication Service
+  ↓ JWT Token
+Gateway: SecurityConfig.java (Validate Token)
+  ↓ Forward Request
+Backend: Microservices (JWT Validation)
+```
+
+### 🔗 **Inter-Service Communication Relationships**
+
+#### **Synchronous Communication (HTTP/REST)**
+- Frontend ↔ Gateway ↔ Microservices
+- Microservices ↔ Microservices (via RestTemplate)
+
+#### **Asynchronous Communication (Kafka)**
+- Order Service → Payment Service (Order Creation)
+- Payment Service → Order Service (Payment Results)
+- All Services → Monitoring System (Logs, Metrics)
+
+#### **Real-time Communication (WebSocket)**
+- Order Service → Frontend (Order Status Updates)
+
+### 📊 **Data Flow**
+
+#### **Read Operations (Master-Slave)**
+```
+Request → Gateway → Microservice → Slave Database (Read)
+```
+
+#### **Write Operations (Master-Slave)**
+```
+Request → Gateway → Microservice → Master Database (Write)
+```
+
+#### **Caching Strategy**
+```
+Read Operation: Redis Cache → Database
+Write Operation: Database → Clear Redis Cache
+```
+
+### 🛡️ **Security Architecture**
+
+#### **Authentication Flow**
+```
+User Login → Keycloak Validation → Return JWT → Frontend Storage → Request with Token → Gateway Validation → Microservice Validation
+```
+
+#### **Authorization Strategy**
+```
+Gateway Layer: Path-level Permission Control
+Service Layer: Method-level Permission Control
+Data Layer: Row-level Data Permission
+```
+
+### 🏛️ **Key Architectural Patterns**
+
+#### 1. **Microservices Pattern**
+- **Service Decomposition**: Each business domain as independent service
+- **Service Independence**: Independent deployment and scaling
+- **Technology Diversity**: Each service can use different technologies
+
+#### 2. **API Gateway Pattern**
+- **Single Entry Point**: All client requests go through gateway
+- **Cross-cutting Concerns**: Authentication, rate limiting, logging
+- **Service Discovery**: Dynamic routing to microservices
+
+#### 3. **SAGA Pattern (Distributed Transactions)**
+- **Choreography**: Services communicate via events
+- **Compensation**: Rollback mechanisms for failed transactions
+- **Eventual Consistency**: Data consistency achieved over time
+
+#### 4. **CQRS Pattern (Command Query Responsibility Segregation)**
+- **Read/Write Separation**: Different models for read and write operations
+- **Optimized Queries**: Read models optimized for specific queries
+- **Scalability**: Independent scaling of read and write operations
+
+#### 5. **Event-Driven Architecture**
+- **Loose Coupling**: Services communicate via events
+- **Asynchronous Processing**: Non-blocking communication
+- **Scalability**: Horizontal scaling through event processing
+
+### 🔧 **Technology Stack Summary**
+
+| Layer | Technology | Purpose |
+|-------|------------|---------|
+| **Frontend** | React, Redux, Material-UI | User Interface |
+| **API Gateway** | Spring Cloud Gateway | Request Routing & Security |
+| **Microservices** | Spring Boot, Spring Cloud | Business Logic |
+| **Service Discovery** | Netflix Eureka | Service Registration |
+| **Configuration** | Spring Cloud Config | Centralized Configuration |
+| **Message Queue** | Apache Kafka | Asynchronous Communication |
+| **Database** | MySQL (Master-Slave) | Persistent Storage |
+| **Cache** | Redis (Sentinel) | Caching & Session Storage |
+| **Authentication** | Keycloak | Identity & Access Management |
+| **Monitoring** | Prometheus, Grafana, Loki | Observability |
+| **Containerization** | Docker | Application Packaging |
+| **Orchestration** | Kubernetes | Container Orchestration |
+
+### 🔄 **Service Execution Flow Diagrams**
+
+#### 1. **User Service Flow**
+```
+UserController.java → UserService.java → UserRepository.java → MySQL Database
+    ↓
+AuditAwareImpl.java (Audit Trail) → BaseEntity.java (Audit Fields)
+    ↓
+Redis Cache (Session/Data Caching)
+```
+
+#### 2. **Order Service Flow (SAGA Pattern)**
+```
+OrderController.java → OrderService.java → OrderRepository.java → MySQL Database
+    ↓
+OrderProducer.java → Kafka → PaymentConsumer.java → PaymentService.java
+    ↓
+PaymentProducer.java → Kafka → OrderConsumer.java → OrderStatusWebSocketHandler.java
+    ↓
+Frontend Real-time Updates
+```
+
+#### 3. **Item Service Flow**
+```
+ItemController.java → ItemService.java → ItemRepository.java → MySQL Database
+    ↓
+CloudinaryService.java (Image Upload) → Cloudinary Cloud Storage
+    ↓
+Redis Cache (Product Caching)
+```
+
+#### 4. **Payment Service Flow**
+```
+PaymentController.java → PaymentService.java → PaymentRepository.java → MySQL Database
+    ↓
+PaymentProducer.java → Kafka → OrderConsumer.java (Status Update)
+    ↓
+WebSocket → Frontend (Real-time Payment Status)
+```
+
+#### 5. **Gateway Service Flow**
+```
+GatewayApplication.java → SecurityConfig.java → CORS Configuration
+    ↓
+Route Configuration → Service Discovery (Eureka)
+    ↓
+Circuit Breaker (Resilience4J) → Rate Limiting (Redis)
+    ↓
+FallbackController.java (Error Handling)
+```
+
+#### 6. **Configuration Service Flow**
+```
+ConfigApplication.java → Configuration Repository
+    ↓
+Centralized Configuration Management
+    ↓
+Service Configuration Distribution
+```
+
+#### 7. **Service Discovery Flow**
+```
+EurekaApplication.java → EurekaServerConfig.java
+    ↓
+Service Registration & Discovery
+    ↓
+Load Balancing & Health Checks
+```
+
+#### 8. **Frontend Service Flow**
+```
+App.js → Redux Store → Service APIs (Axios)
+    ↓
+Component Rendering → User Interaction
+    ↓
+State Management → API Communication
+```
+
+#### 9. **Message Queue Flow**
+```
+Kafka Producer → Kafka Cluster → Kafka Consumer
+    ↓
+Event Processing → Service Communication
+    ↓
+Asynchronous Operations → Error Handling
+```
+
+#### 10. **Database Operations Flow**
+```
+Master Database (Write Operations) → Slave Database (Read Operations)
+    ↓
+Optimistic Locking → Data Consistency
+    ↓
+Redis Cache → Performance Optimization
+```
+
+#### 11. **Security Authentication Flow**
+```
+Keycloak → OAuth2/OpenID Connect → JWT Token
+    ↓
+Gateway Validation → Service Authorization
+    ↓
+Role-Based Access Control → Resource Protection
+```
+
+#### 12. **Monitoring & Observability Flow**
+```
+Prometheus → Metrics Collection → Grafana Dashboards
+    ↓
+Loki → Log Aggregation → Log Analysis
+    ↓
+Tempo → Distributed Tracing → Performance Analysis
+```
+
+#### 13. **Deployment Configuration Flow**
+```
+Docker Compose → Container Orchestration → Service Deployment
+    ↓
+Kubernetes → Pod Management → Load Balancing
+    ↓
+AWS EKS → Cloud Infrastructure → Auto Scaling
 ```
 
 ---
