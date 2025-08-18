@@ -1,3 +1,4 @@
+// File: backend/NexusMart/src/main/java/com/example/NexusMart/model/Item.java
 package com.example.NexusMart.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;

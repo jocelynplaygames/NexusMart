@@ -1,3 +1,4 @@
+// File: backend/NexusMart/src/main/java/com/example/NexusMart/config/CorsConfig.java
 package com.example.NexusMart.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,3 +1,4 @@
+// File: frontend/src/App/redux/store/store.js
 import { configureStore } from '@reduxjs/toolkit';
 import snackbarReducer from '../slice/snackbarSlice';
 import windowSizeReducer, { windowSizeActions } from '../slice/windowSizeSlice';

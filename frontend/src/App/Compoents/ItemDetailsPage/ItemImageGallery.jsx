@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+// File: frontend/src/App/Compoents/ItemDetailsPage/ItemImageGallery.jsx
+import React, { useState } from 'react';
 import { Box, Grid, CardMedia, Typography } from '@mui/material';
 
 const ItemImageGallery = ({ images }) => {

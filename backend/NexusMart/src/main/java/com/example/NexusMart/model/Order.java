@@ -1,3 +1,4 @@
+// File: backend/NexusMart/src/main/java/com/example/NexusMart/model/Order.java
 package com.example.NexusMart.model;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -37,7 +38,5 @@ public class Order extends BaseEntity {
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> orderItems;
-
-    // Getters and setters are inherited from BaseEntity
 }
 

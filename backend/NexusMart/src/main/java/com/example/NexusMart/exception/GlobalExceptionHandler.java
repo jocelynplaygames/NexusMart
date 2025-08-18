@@ -1,3 +1,4 @@
+// File: backend/NexusMart/src/main/java/com/example/NexusMart/exception/GlobalExceptionHandler.java
 package com.example.NexusMart.exception;
 
 import com.example.NexusMart.dto.ErrorResponseDto;

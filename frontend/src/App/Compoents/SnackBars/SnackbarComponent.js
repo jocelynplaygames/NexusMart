@@ -1,3 +1,4 @@
+// File: frontend/src/App/Compoents/SnackBars/SnackbarComponent.js
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Snackbar, Alert } from '@mui/material';

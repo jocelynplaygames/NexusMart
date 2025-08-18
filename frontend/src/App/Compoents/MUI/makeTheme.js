@@ -1,3 +1,4 @@
+// File: frontend/src/App/Compoents/MUI/makeTheme.js
 import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({

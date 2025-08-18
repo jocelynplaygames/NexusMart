@@ -1,3 +1,4 @@
+// File: backend/Microservice/Order/src/main/java/com/example/NexusMart/model/Order.java
 package com.example.NexusMart.model;
 import jakarta.persistence.*;
 import lombok.Data;

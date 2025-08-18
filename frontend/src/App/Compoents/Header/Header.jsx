@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+// File: frontend/src/App/Compoents/Header/Header.jsx
+import React, { useState, useContext } from 'react';
 import { AppBar, Toolbar, Typography, Button, IconButton, ButtonBase, Avatar  } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useNavigate } from 'react-router-dom';
@@ -64,8 +65,7 @@ const Header = () => {
 */}
                 </div>
             </Toolbar>
-            <LoginDialog open={loginOpen} onClose=
-             />
+            <LoginDialog open={loginOpen} onClose={handleLoginClose} />
         </AppBar>
     );
 };

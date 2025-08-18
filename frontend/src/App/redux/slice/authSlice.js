@@ -1,3 +1,4 @@
+// File: frontend/src/App/redux/slice/authSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
 const authSlice = createSlice({

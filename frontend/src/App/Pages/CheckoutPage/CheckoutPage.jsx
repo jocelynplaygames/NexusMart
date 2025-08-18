@@ -1,3 +1,4 @@
+// File: frontend/src/App/Pages/CheckoutPage/CheckoutPage.jsx
 import React, { useEffect, useState, useRef } from 'react';
 import { Box, Grid, Typography, Button } from '@mui/material';
 import SummaryCard from '../../Compoents/CheckoutPage/SummaryCard';

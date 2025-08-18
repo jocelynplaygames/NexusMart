@@ -1,3 +1,4 @@
+// File: frontend/src/App/Compoents/ItemDetailsPage/ItemDetails.jsx
 import React, { useState, useEffect } from 'react';
 import { Box, Typography, Tabs, Tab } from '@mui/material';
 import { fetchItemFeedbacks } from '../../service/FeedbackService';

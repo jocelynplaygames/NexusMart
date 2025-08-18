@@ -1,3 +1,4 @@
+// File: frontend/src/App/redux/slice/snackbarSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
 export const snackbarSlice = createSlice({

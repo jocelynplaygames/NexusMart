@@ -1,3 +1,4 @@
+// File: backend/Microservice/Order/src/main/java/com/example/NexusMart/OrderApplication.java
 package com.example.NexusMart;
 
 import org.springframework.boot.SpringApplication;
@@ -31,17 +32,18 @@ public class OrderApplication {
 		// SpringApplication.run(...)：Spring Boot 的启动方法，用于启动整个订单服务。
 		// OrderApplication.class：传入当前类的字节码对象，告诉 Spring Boot 以该类为入口启动。
 		// args：将命令行参数传入启动方法。
-
 	}
 
 }
 // 当你保存一个实体（比如订单）时：
-// JPA 检测到实体中有 @CreatedBy 或 @LastModifiedBy 注解的字段。（JPA 是 Java Persistence API（Java 持久化 API）的缩写，是 Java 官方定义的一套 ORM（对象关系映射）规范，用于简化 Java 程序操作数据库的过程。）
+// JPA 检测到实体中有 @CreatedBy 或 @LastModifiedBy 注解的字段。
+// （JPA 是 Java Persistence API（Java 持久化 API）的缩写，是 Java 官方定义的一套 ORM（对象关系映射）规范
 // 通过 auditorAwareRef 指定的 Bean 名称（auditAwareImpl），找到 AuditAwareImpl 实例。
 // 调用 AuditAwareImpl 的 getCurrentAuditor() 方法，获取当前操作用户的标识（如用户 ID）。
 // 自动将这个用户标识填入 @CreatedBy 或 @LastModifiedBy 字段，完成审计记录。
 // 总结：
-// auditorAwareRef 就像一个 “地址牌”，告诉 JPA 审计功能：“去这个名为 xxx 的 Bean 那里，就能找到当前操作用户的信息”。找到当前操作用户的信息后，JPA 会自动将这些信息存入数据库，具体存入实体类中标记了 @CreatedBy 和 @LastModifiedBy 注解的字段里
+// auditorAwareRef 就像一个 “地址牌”，告诉 JPA 审计功能：“去这个名为 xxx 的 Bean 那里，就能找到当前操作用户的信息”。
+// 找到当前操作用户的信息后，JPA 会自动将这些信息存入数据库，具体存入实体类中标记了 @CreatedBy 和 @LastModifiedBy 注解的字段里
 // 它的值必须和你定义的 AuditorAware 实现类的 Bean 名称一致，否则 JPA 会找不到用户信息，导致 @CreatedBy 等字段无法自动填充。
 
 
@@ -70,7 +72,8 @@ public class OrderApplication {
 // 3. 数据库中的效果
 // 保存后，orders 表中会有这样一条记录
 
-//AuditAwareImpl 负责 “提供用户信息”，而 JPA 审计功能负责 “自动将这些信息存入数据库的审计字段”，整个过程无需你手动编写 order.setCreatedBy(userId) 这样的代码，完全由框架自动完成。
+//AuditAwareImpl 负责 “提供用户信息”，而 JPA 审计功能负责 “自动将这些信息存入数据库的审计字段”，
+// 整个过程无需你手动编写 order.setCreatedBy(userId) 这样的代码，完全由框架自动完成。
 
 
 //订单服务

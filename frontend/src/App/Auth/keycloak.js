@@ -1,3 +1,4 @@
+// File: frontend/src/App/Auth/keycloak.js
 import Keycloak from 'keycloak-js';//keycloak-js是 Keycloak 官方提供的前端库，封装了和 Keycloak 服务器通信的方法（比如登录、登出、获取用户信息）。
 
 //对接 Keycloak 服务器的 “关键信息”，相当于登录第三方系统的 “地址和账号”：

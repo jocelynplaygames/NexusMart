@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+// File: frontend/src/App/Compoents/SellPage/ListingDetailsForm.jsx
+import React, { useState, useEffect } from 'react';
 import { Box, TextField, Button, Typography, MenuItem } from '@mui/material';
 
 const ListingDetailsForm = ({ mainCategories, subCategories, onMainCategoryChange, selectedMainCategory, onSubmit, initialData }) => {

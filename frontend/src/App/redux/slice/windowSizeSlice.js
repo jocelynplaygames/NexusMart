@@ -1,3 +1,4 @@
+// File: frontend/src/App/redux/slice/windowSizeSlice.js
 import { createSlice, createAction } from '@reduxjs/toolkit';
 
 const setIsWide = createAction('window/setIsWide');

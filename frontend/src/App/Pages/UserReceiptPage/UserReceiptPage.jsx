@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+// File: frontend/src/App/Pages/UserReceiptPage/UserReceiptPage.jsx
+import React, { useState, useEffect } from 'react';
 import { Box, Typography } from '@mui/material';
 import OrderReceipt from '../../Compoents/ReceiptPage/OrderReceipt';
 import { useSelector } from 'react-redux';

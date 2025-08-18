@@ -1,3 +1,4 @@
+// File: backend/NexusMart/src/main/java/com/example/NexusMart/model/Rating.java
 package com.example.NexusMart.model;
 import jakarta.persistence.*;
 import lombok.Data;

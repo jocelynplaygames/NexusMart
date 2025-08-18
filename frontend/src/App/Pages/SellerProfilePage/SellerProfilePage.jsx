@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+// File: frontend/src/App/Pages/SellerProfilePage/SellerProfilePage.jsx
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Container } from '@mui/material';
 import SellerProfileHeader from '../../Compoents/SellerProfilePage/SellerProfilePageHeader';

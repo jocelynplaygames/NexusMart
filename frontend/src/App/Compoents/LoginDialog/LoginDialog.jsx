@@ -1,3 +1,4 @@
+// File: frontend/src/App/Compoents/LoginDialog/LoginDialog.jsx
 import React, { useState } from 'react';
 // Material-UI组件库导入
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button, TextField, Tabs, Tab, Box } from '@mui/material';

@@ -1,3 +1,4 @@
+// File: frontend/src/App/Pages/SellPage/SellPage.jsx
 import React, { useState, useEffect } from 'react';
 import ImageUpload from '../../Compoents/SellPage/ImageUpload';
 import ListingDetailsForm from '../../Compoents/SellPage/ListingDetailsForm';

@@ -1,26 +1,5 @@
-/**
- * 认证上下文管理器 (Authentication Context Manager)
- * 
- * 功能概述：
- * - 管理用户登录状态和JWT令牌
- * - 提供统一的认证接口（登录、登出、令牌刷新）
- * - 集成Keycloak身份认证服务
- * - 自动处理令牌过期和刷新
- * 
- * 核心特性：
- * - 持久化存储：令牌保存在localStorage中
- * - 自动刷新：令牌过期前1分钟自动刷新
- * - 状态同步：与Redux状态管理集成
- * - 错误处理：完善的异常处理机制
- * 
- * 技术栈：
- * - React Context API：状态共享
- * - Keycloak：身份认证服务
- * - Axios：HTTP请求
- * - Redux：全局状态管理
- */
-
-import React, { createContext, useState, useEffect, useContext } from 'react';
+// File: frontend/src/App/Auth/AuthContext.js
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import { keycloakInstance, KEYCLOAK_URL, KEYCLOAK_REALM, KEYCLOAK_CLIENT_ID, KEYCLOAK_CLIENT_SECRET } from './keycloak';
 import { useDispatch } from 'react-redux';

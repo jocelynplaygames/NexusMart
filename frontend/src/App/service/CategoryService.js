@@ -1,4 +1,5 @@
-import axiosInstance from './AxiosConfig';
+// File: frontend/src/App/service/CategoryService.js
+import axiosInstance from "./AxiosConfig";
 
 export const fetchMainCategories = async () => {
     const response = await axiosInstance.get('/api/categories/main-categories');

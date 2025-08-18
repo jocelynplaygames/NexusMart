@@ -1,4 +1,5 @@
-import {jwtDecode as jwt_decode} from 'jwt-decode';
+// File: frontend/src/App/Auth/JwtUtils.js
+import jwt_decode from 'jwt-decode';
 
 export const decodeToken = (token) => {
   try {

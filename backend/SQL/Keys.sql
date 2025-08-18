@@ -1,3 +1,5 @@
+-- File: backend/SQL/Keys.sql
+-- Add foreign key constraints
 -- Addresses table foreign key
 ALTER TABLE addresses
     ADD FOREIGN KEY (user_id) REFERENCES users(id);

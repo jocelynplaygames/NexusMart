@@ -1,3 +1,4 @@
+-- File: backend/SQL/TablesWithoutFK.sql
 -- Create Users table
 CREATE TABLE users (
     id VARCHAR(36) PRIMARY KEY,

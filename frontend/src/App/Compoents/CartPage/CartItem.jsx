@@ -1,3 +1,4 @@
+// File: frontend/src/App/Compoents/CartPage/CartItem.jsx
 import React from 'react';
 import { Box, Typography, Link, CardMedia, TextField } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';

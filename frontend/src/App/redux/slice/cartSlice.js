@@ -1,3 +1,4 @@
+// File: frontend/src/App/redux/slice/cartSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { fetchCartItems, updateCart } from '../../service/CartService';
 

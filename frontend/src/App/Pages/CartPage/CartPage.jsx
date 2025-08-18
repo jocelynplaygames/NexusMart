@@ -1,3 +1,4 @@
+// File: frontend/src/App/Pages/CartPage/CartPage.jsx
 import React, { useState, useEffect } from 'react';
 import { Box, Typography, Divider, Grid, TextField, Link } from '@mui/material';
 import CartItem from '../../Compoents/CartPage/CartItem';

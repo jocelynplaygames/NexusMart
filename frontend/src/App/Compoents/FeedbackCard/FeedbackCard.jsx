@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+// File: frontend/src/App/Compoents/FeedbackCard/FeedbackCard.jsx
+import React, { useState } from 'react';
 import { Box, Typography, Rating, TextField, Button } from '@mui/material';
 import { deleteFeedback, updateFeedback } from '../../service/FeedbackService';
 import { useSelector } from 'react-redux';

@@ -1,3 +1,4 @@
+// File: backend/NexusMart/src/main/java/com/example/NexusMart/service/CategoryService.java
 package com.example.NexusMart.service;
 import com.example.NexusMart.model.MainCategory;
 import com.example.NexusMart.model.SubCategory;

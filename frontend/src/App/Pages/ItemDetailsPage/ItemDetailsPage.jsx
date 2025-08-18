@@ -1,3 +1,4 @@
+// File: frontend/src/App/Pages/ItemDetailsPage/ItemDetailsPage.jsx
 import React, { useEffect, useState } from 'react';
 import { Container, Grid, Button, Typography, Box, Divider, TextField } from '@mui/material';
 import ItemImageGallery from '../../Compoents/ItemDetailsPage/ItemImageGallery';

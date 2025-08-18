@@ -1,3 +1,4 @@
+// File: frontend/src/App/Compoents/SellPage/ImageUpload.jsx
 import React, { useState, useEffect } from 'react';
 import { Box, Typography, IconButton } from '@mui/material';
 import UploadIcon from '@mui/icons-material/Upload';

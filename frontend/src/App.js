@@ -1,3 +1,4 @@
+// File: frontend/src/App.js
 import './App.css';
 import { useEffect, useState } from 'react';
 import ProtectedRoute from './App/Auth/ProtectedRoute';

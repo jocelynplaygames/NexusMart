@@ -1,3 +1,4 @@
+// File: frontend/src/App/Compoents/SearchBar/SearchBar.jsx
 import React, { useState, useEffect } from 'react';
 import { TextField, InputAdornment, Button, Autocomplete, Box } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';

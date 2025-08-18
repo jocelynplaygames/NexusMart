@@ -1,3 +1,5 @@
+-- File: backend/SQL/data/Categories.sql
+-- Insert category data
 INSERT INTO main_categories (name) VALUES
 ('Electronics'),
 ('Clothing'),

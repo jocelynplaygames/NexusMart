@@ -1,3 +1,4 @@
+// File: backend/NexusMart/src/main/java/com/example/NexusMart/controller/RatingController.java
 package com.example.NexusMart.controller;
 
 import com.example.NexusMart.dto.RatingDTO;

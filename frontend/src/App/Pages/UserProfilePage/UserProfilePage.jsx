@@ -1,4 +1,5 @@
-import React, {useEffect} from 'react';
+// File: frontend/src/App/Pages/UserProfilePage/UserProfilePage.jsx
+import React, { useState, useEffect } from 'react';
 import { Container, Box } from '@mui/material';
 import UserProfileHeader from '../../Compoents/UserProfilePage/UserProfileHeader';
 import UserProfileTabs from '../../Compoents/UserProfilePage/UserProfileTabs';

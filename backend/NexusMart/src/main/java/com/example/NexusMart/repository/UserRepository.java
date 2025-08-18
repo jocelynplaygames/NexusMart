@@ -1,3 +1,4 @@
+// File: backend/NexusMart/src/main/java/com/example/NexusMart/repository/UserRepository.java
 package com.example.NexusMart.repository;
 import com.example.NexusMart.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;

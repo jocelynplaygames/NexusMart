@@ -1,4 +1,5 @@
-import { styled } from '@mui/system';
+// File: frontend/src/App/Compoents/MUI/makeStyle.js
+import { makeStyles } from '@mui/styles';
 
 export default function makeComponentStyle(Component, style) {
     if (!style) {

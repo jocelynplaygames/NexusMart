@@ -1,3 +1,4 @@
+// File: frontend/src/App/Pages/HomePage/HomePage.jsx
 import SearchBar from "../../Compoents/SearchBar/SearchBar";
 import CategoryCardHomePage from '../../Compoents/HomePage/CategoryCardHomePage';
 import '../../../App.css'

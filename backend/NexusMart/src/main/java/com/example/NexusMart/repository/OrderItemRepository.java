@@ -1,3 +1,4 @@
+// File: backend/NexusMart/src/main/java/com/example/NexusMart/repository/OrderItemRepository.java
 package com.example.NexusMart.repository;
 import com.example.NexusMart.model.OrderItem;
 import org.springframework.data.jpa.repository.JpaRepository;

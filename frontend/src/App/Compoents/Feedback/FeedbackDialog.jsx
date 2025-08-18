@@ -1,3 +1,4 @@
+// File: frontend/src/App/Compoents/Feedback/FeedbackDialog.jsx
 import React, { useState } from 'react';
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button, TextField, Rating, Box, Typography } from '@mui/material';
 import { submitFeedback } from '../../service/FeedbackService';

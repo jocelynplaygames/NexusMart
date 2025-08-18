@@ -1,3 +1,4 @@
+// File: backend/Microservice/User/src/main/java/com/example/NexusMart/config/SecurityConfig.java
 package com.example.NexusMart.config;
 
 import org.springframework.beans.factory.annotation.Value;

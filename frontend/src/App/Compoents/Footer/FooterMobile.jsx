@@ -1,3 +1,4 @@
+// File: frontend/src/App/Compoents/Footer/FooterMobile.jsx
 import React from 'react';
 import { Box, Typography, Container, Grid } from '@mui/material';
 import NoBorderBtn from '../Buttons/NoBorder/NoBorderBtn';
