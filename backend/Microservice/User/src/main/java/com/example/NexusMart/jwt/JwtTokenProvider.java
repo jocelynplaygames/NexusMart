@@ -50,7 +50,7 @@ public class JwtTokenProvider {
             ObjectMapper mapper = new ObjectMapper();
             JsonNode jsonNode = mapper.readTree(response);
 
-            // Find the key with "use": "sig" and "alg": "RS256"
+            
             JsonNode keyNode = null;
             for (JsonNode key : jsonNode.get("keys")) {
                 if ("sig".equals(key.get("use").asText()) && "RS256".equals(key.get("alg").asText())) {
@@ -66,7 +66,7 @@ public class JwtTokenProvider {
             String publicKeyString = keyNode.get("x5c").get(0).asText();
             log.debug("Public key string: {}", publicKeyString);
 
-            // Decode the Base64-encoded certificate and extract the public key
+            
             byte[] decoded = Base64.getDecoder().decode(publicKeyString);
             CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509");
             X509Certificate certificate = (X509Certificate) certificateFactory.generateCertificate(new java.io.ByteArrayInputStream(decoded));
@@ -100,6 +100,6 @@ public class JwtTokenProvider {
     public String extractUserIdFromToken(String token) {
         Claims claims = Jwts.parserBuilder().setSigningKey(publicKey).build().parseClaimsJws(token).getBody();
         log.info("Token claims: {}", claims);
-        return claims.getSubject(); // Typically, the 'sub' claim is used as the user ID
+        return claims.getSubject(); 
     }
 }

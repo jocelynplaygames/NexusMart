@@ -5,18 +5,18 @@ import com.example.NexusMart.dto.CartDTO;           // 购物车数据传输对�
 import com.example.NexusMart.dto.CartItemInputDTO;  // 购物车商品输入数据传输对象
 import com.example.NexusMart.dto.CartItemOutputDTO; // 购物车商品输出数据传输对象
 import com.example.NexusMart.exception.ResourceNotFoundException;  // 资源未找到异常
-import com.example.NexusMart.jwt.JwtTokenProvider;  // JWT令牌提供者
+import com.example.NexusMart.jwt.JwtTokenProvider;  
 import com.example.NexusMart.pojoClass.Item;        // 商品实体类
 import com.example.NexusMart.service.CartService;   // 购物车业务服务层
 import com.example.NexusMart.service.UserService;   // 用户业务服务层
-import lombok.extern.slf4j.Slf4j;                   // Lombok日志注解
+import lombok.extern.slf4j.Slf4j;                   
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;  // 配置属性注入注解
-import org.springframework.dao.InvalidDataAccessApiUsageException;  // 数据访问API使用异常
-import org.springframework.http.HttpStatus;          // HTTP状态码
-import org.springframework.http.ResponseEntity;     // HTTP响应实体
-import org.springframework.web.bind.annotation.*;   // REST API注解
-import org.springframework.web.client.RestTemplate; // REST客户端模板
+import org.springframework.dao.InvalidDataAccessApiUsageException;  
+import org.springframework.http.HttpStatus;          
+import org.springframework.http.ResponseEntity;     
+import org.springframework.web.bind.annotation.*;   
+import org.springframework.web.client.RestTemplate; 
 
 /**
  * 购物车管理控制器
@@ -39,14 +39,14 @@ public class CartController {
     
     // 依赖注入：购物车业务服务层
     private final CartService cartService;
-    // 依赖注入：JWT令牌提供者，用于解析和验证JWT令牌
+    
     private final JwtTokenProvider jwtTokenProvider;
     // 依赖注入：用户业务服务层
     private final UserService userService;
-    // 依赖注入：REST客户端模板，用于调用其他微服务
+    
     private final RestTemplate restTemplate;
 
-    // 从配置文件中注入商品服务的URL地址
+    
     @Value("${itemservice.url}")
     private String itemServiceUrl;
 
@@ -80,7 +80,7 @@ public class CartController {
      */
     @PostMapping
     public ResponseEntity<CartDTO> createCart(@RequestBody CartDTO cartDTO, @RequestHeader("Authorization") String token) {
-        // 从JWT令牌中提取用户ID（去掉"Bearer "前缀）
+        
         String userId = jwtTokenProvider.extractUserIdFromToken(token.replace("Bearer ", ""));
         cartDTO.setUserId(userId);
         CartDTO createdCart = cartService.createCart(cartDTO);
@@ -102,7 +102,7 @@ public class CartController {
      */
     @GetMapping("/{userId}")
     public ResponseEntity<CartDTO> getCart(@PathVariable String userId, @RequestHeader("Authorization") String token) {
-        // 从JWT令牌中提取用户ID
+        
         String tokenUserId = jwtTokenProvider.extractUserIdFromToken(token.replace("Bearer ", ""));
         
         // 权限验证：确保用户只能访问自己的购物车
@@ -196,11 +196,11 @@ public class CartController {
      */
     @PostMapping("/items")
     public ResponseEntity<CartItemOutputDTO> addItemToCart(@RequestBody CartItemInputDTO cartItemDTO, @RequestHeader("Authorization") String token) {
-        // 从JWT令牌中提取用户ID
+        
         String userId = jwtTokenProvider.extractUserIdFromToken(token.replace("Bearer ", ""));
 
         // 微服务间通信：调用商品服务获取商品信息
-        // 构建商品服务的URL
+        
         String url = String.format("%s/%s", itemServiceUrl, cartItemDTO.getItemId());
         ResponseEntity<Item> itemResponse = restTemplate.getForEntity(url, Item.class);
         Item item = itemResponse.getBody();
@@ -210,7 +210,7 @@ public class CartController {
             throw new ResourceNotFoundException("Item", "id", cartItemDTO.getItemId().toString());
         }
 
-        // 获取商品卖家ID
+        
         String sellerId = item.getSellerId();
 
         // 业务逻辑验证：用户不能购买自己的商品
@@ -222,7 +222,7 @@ public class CartController {
         CartDTO cartDTO = cartService.ensureCartExists(userId);
         cartItemDTO.setCartId(cartDTO.getId());
 
-        // 验证购物车ID不能为空
+        
         if (cartItemDTO.getCartId() == null) {
             throw new InvalidDataAccessApiUsageException("Cart id must not be null");
         }

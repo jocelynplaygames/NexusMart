@@ -11,5 +11,5 @@ public class MainCategoryDTO implements Serializable {
     private String name;
     private Timestamp createdAt;
     private Timestamp updatedAt;
-    // Getters and setters...
+    
 }

@@ -89,7 +89,7 @@ public class CartService {
                     .map(cartItemDTO -> CartItemMapper.toEntity(cartItemDTO))
                     .collect(Collectors.toList());
 
-            // Clear existing items and add the updated items
+            
             cart.getCartItems().clear();
             for (CartItem cartItem : cartItems) {
                 cartItem.setCart(cart);

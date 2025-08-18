@@ -76,12 +76,12 @@ public class CartController {
     public ResponseEntity<CartItemOutputDTO> addItemToCart(@RequestBody CartItemInputDTO cartItemDTO, @RequestHeader("Authorization") String token) {
         String userId = jwtTokenProvider.extractUserIdFromToken(token.replace("Bearer ", ""));
 
-        // Query the item table to get the seller ID using the item ID
+        
         Item item = itemRepository.findById(cartItemDTO.getItemId())
                 .orElseThrow(() -> new ResourceNotFoundException("Item", "id", cartItemDTO.getItemId().toString()));
         String sellerId = item.getSeller().getId();
 
-        // Compare the seller ID with the extracted user ID
+        
         if (userId.equals(sellerId)) {
             throw new InvalidDataAccessApiUsageException("You cannot add your own product to your cart");
         }

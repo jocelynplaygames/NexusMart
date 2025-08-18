@@ -52,9 +52,9 @@ public class LoggingCacheAspect {
     }
 
     private Object generateKey(Cacheable cacheable, String cacheName) {
-        // Implement key generation logic based on method parameters
-        // This can be complex and might need reflection to get the method parameters and annotations
-        // For simplicity, let's assume it's a simple string key
+        
+        
+        
         return "generatedKeyBasedOnParameters";
     }
 }

@@ -29,6 +29,6 @@ public class Feedback extends BaseEntity {
     @Lob
     private String comment;
 
-    // Getters and setters are inherited from BaseEntity
+    
 }
 

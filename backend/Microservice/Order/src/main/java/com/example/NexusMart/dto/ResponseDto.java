@@ -14,5 +14,5 @@ public class ResponseDto {
         this.token = token;
     }
 
-    // Getters and setters
+    
 }

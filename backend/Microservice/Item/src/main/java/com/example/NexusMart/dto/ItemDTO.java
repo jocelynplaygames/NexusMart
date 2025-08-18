@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 public class ItemDTO implements Serializable {
     private Long id;
     private String sellerId;
-    private String username; // New field for the seller's username
+    private String username; 
     private String title;
     @NotBlank(message = "Short description is mandatory")
     private String shortDescription;
@@ -33,7 +33,7 @@ public class ItemDTO implements Serializable {
     @NotBlank(message = "City is mandatory")
     private String city;
     @NotBlank(message = "State is mandatory")
-    private String state; // New field
+    private String state; 
     @NotBlank(message = "Country is mandatory")
     private String country;
     @NotNull(message = "Main category is mandatory")

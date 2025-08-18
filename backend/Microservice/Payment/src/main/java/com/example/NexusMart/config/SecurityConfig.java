@@ -15,14 +15,14 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-//                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
-//                        .requestMatchers(HttpMethod.GET, "/api/user/**").permitAll()
-//                        .requestMatchers(HttpMethod.GET, "/api/feedback/**").permitAll()
-//                        .requestMatchers(HttpMethod.POST, "/api/item").authenticated()
-//                        .requestMatchers(HttpMethod.PUT, "/api/item/**").authenticated()
-//                        .requestMatchers(HttpMethod.DELETE, "/api/item/**").authenticated()
-//                        .requestMatchers("/api/user/{id}").authenticated()
-//                        .requestMatchers("/api/cart/{id}").authenticated()
+
+
+
+
+
+
+
+
                         .anyRequest().permitAll()
                 )
                 .csrf(AbstractHttpConfigurer::disable);

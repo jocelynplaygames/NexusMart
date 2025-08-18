@@ -7,7 +7,7 @@ public class ResponseDto {
     private String statusCode;
     private String message;
     private String token;
-    private UserDTO user; // New field for the updated user
+    private UserDTO user; 
 
     public ResponseDto(String statusCode, String message, String token, UserDTO user) {
         this.statusCode = statusCode;
@@ -16,5 +16,5 @@ public class ResponseDto {
         this.user = user;
     }
 
-    // Getters and setters
+    
 }

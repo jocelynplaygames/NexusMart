@@ -26,7 +26,7 @@ public class AdminController {
         this.adminService = adminService;
     }
 
-    // MainCategory CRUD operations
+    
 
     @GetMapping("/main-categories")
     public ResponseEntity<List<MainCategoryDTO>> getAllMainCategories() {
@@ -58,7 +58,7 @@ public class AdminController {
         return ResponseEntity.noContent().build();
     }
 
-    // SubCategory CRUD operations
+    
     @GetMapping("/sub-categories")
     public ResponseEntity<List<SubCategoryDTO>> getAllSubCategories() {
         List<SubCategoryDTO> subCategories = adminService.getAllSubCategories();

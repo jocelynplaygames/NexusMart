@@ -7,7 +7,7 @@ public class OrderCreationMessage {
     private Long cardId;
     private String token;
 
-    // Constructors, getters, and setters
+    
     public OrderCreationMessage(Long orderId, Long cartId, Long shippingMethodId, Long cardId, String token) {
         this.orderId = orderId;
         this.cartId = cartId;

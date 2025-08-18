@@ -11,7 +11,7 @@ public class SubCategoryDTO implements Serializable {
     private Long mainCategoryId;
     private String mainCategoryName;
     private String name;
-    private String imageUrl; // Added imageUrl field
+    private String imageUrl; 
     private Timestamp createdAt;
     private Timestamp updatedAt;
 }

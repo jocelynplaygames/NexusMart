@@ -26,6 +26,6 @@ public class OrderItem extends BaseEntity {
     @Column(nullable = false)
     private double price;
 
-    // Getters and setters are inherited from BaseEntity
+    
 }
 

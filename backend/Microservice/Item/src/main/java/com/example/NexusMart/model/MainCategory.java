@@ -18,5 +18,5 @@ public class MainCategory extends BaseEntity implements Serializable {
     @Column(nullable = false)
     private String name;
 
-    // Getters and setters are inherited from BaseEntity
+    
 }

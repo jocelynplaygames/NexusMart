@@ -41,7 +41,7 @@ public class AdminService {
         this.cloudinaryService = cloudinaryService;
     }
 
-    // MainCategory methods
+    
 
     @Transactional(readOnly = true)
     public List<MainCategoryDTO> getAllMainCategories() {
@@ -104,7 +104,7 @@ public class AdminService {
         }
     }
 
-    // SubCategory methods
+    
 
     @Transactional(readOnly = true)
     public List<SubCategoryDTO> getAllSubCategories() {

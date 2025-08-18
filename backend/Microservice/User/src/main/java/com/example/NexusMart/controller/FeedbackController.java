@@ -2,12 +2,12 @@ package com.example.NexusMart.controller;
 
 // 导入必要的依赖包
 import com.example.NexusMart.dto.FeedbackDTO;       // 反馈数据传输对象
-import com.example.NexusMart.jwt.JwtTokenProvider;  // JWT令牌提供者
+import com.example.NexusMart.jwt.JwtTokenProvider;  
 import com.example.NexusMart.service.FeedbackService; // 反馈业务服务层
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;          // HTTP状态码
-import org.springframework.http.ResponseEntity;     // HTTP响应实体
-import org.springframework.web.bind.annotation.*;   // REST API注解
+import org.springframework.http.HttpStatus;          
+import org.springframework.http.ResponseEntity;     
+import org.springframework.web.bind.annotation.*;   
 import java.util.List;
 
 /**
@@ -37,7 +37,7 @@ public class FeedbackController {
 
     // 依赖注入：反馈业务服务层
     private final FeedbackService feedbackService;
-    // 依赖注入：JWT令牌提供者，用于解析和验证JWT令牌
+    
     private final JwtTokenProvider jwtTokenProvider;
 
     /**
@@ -123,7 +123,7 @@ public class FeedbackController {
      */
     @PostMapping("/item/{itemId}")
     public ResponseEntity<FeedbackDTO> postFeedback(@PathVariable Long itemId, @RequestBody FeedbackDTO feedbackDTO, @RequestHeader("Authorization") String token) {
-        // 从JWT令牌中提取用户ID，验证用户身份
+        
         String userId = jwtTokenProvider.extractUserIdFromToken(token.replace("Bearer ", ""));
         
         // 调用业务服务创建反馈评价
@@ -152,7 +152,7 @@ public class FeedbackController {
      */
     @PutMapping("/{feedbackId}")
     public ResponseEntity<FeedbackDTO> updateFeedback(@PathVariable Long feedbackId, @RequestBody FeedbackDTO feedbackDTO, @RequestHeader("Authorization") String token) {
-        // 从JWT令牌中提取用户ID
+        
         String userId = jwtTokenProvider.extractUserIdFromToken(token.replace("Bearer ", ""));
         
         // 调用业务服务更新反馈（业务层会验证用户权限）
@@ -181,7 +181,7 @@ public class FeedbackController {
      */
     @DeleteMapping("/{feedbackId}")
     public ResponseEntity<Void> deleteFeedback(@PathVariable Long feedbackId, @RequestHeader("Authorization") String token) {
-        // 从JWT令牌中提取用户ID
+        
         String userId = jwtTokenProvider.extractUserIdFromToken(token.replace("Bearer ", ""));
         
         // 调用业务服务删除反馈（业务层会验证用户权限）

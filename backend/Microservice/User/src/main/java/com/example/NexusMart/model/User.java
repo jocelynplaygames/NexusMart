@@ -41,12 +41,12 @@ public class User extends BaseEntity {
 
     @OneToOne
     @JoinColumn(name = "cartId")
-    private Cart cart; // New field for cart
+    private Cart cart; 
 
     @Version
     @Column(name = "version")
     private Integer version;
-    // Getters and setters are inherited from BaseEntity
+    
 }
 
 

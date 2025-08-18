@@ -13,7 +13,7 @@ import java.util.Base64;
 public class JWKSParserTest {
 
     public static void main(String[] args) {
-        String jwksUri = "http://localhost:7080/realms/NexusMart/protocol/openid-connect/certs";
+        String jwksUri = "http:
         try {
             PublicKey publicKey = getPublicKeyFromJWKS(jwksUri);
             System.out.println("Public Key: " + publicKey);
@@ -31,7 +31,7 @@ public class JWKSParserTest {
             ObjectMapper mapper = new ObjectMapper();
             JsonNode jsonNode = mapper.readTree(response);
 
-            // Find the key with "use": "sig" and "alg": "RS256"
+            
             JsonNode keyNode = null;
             for (JsonNode key : jsonNode.get("keys")) {
                 if ("sig".equals(key.get("use").asText()) && "RS256".equals(key.get("alg").asText())) {
@@ -47,7 +47,7 @@ public class JWKSParserTest {
             String publicKeyString = keyNode.get("x5c").get(0).asText();
             System.out.println("Public Key String: " + publicKeyString);
 
-            // Decode the Base64-encoded certificate and extract the public key
+            
             byte[] decoded = Base64.getDecoder().decode(publicKeyString);
             CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509");
             X509Certificate certificate = (X509Certificate) certificateFactory.generateCertificate(new java.io.ByteArrayInputStream(decoded));

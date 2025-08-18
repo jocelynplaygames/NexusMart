@@ -6,7 +6,7 @@ public class PaymentRequest {
     private Long cartId;
     private String token;
 
-    // Constructors, getters, and setters
+    
     public PaymentRequest(Long orderId, double totalAmount, Long cartId, String token) {
         this.orderId = orderId;
         this.totalAmount = totalAmount;

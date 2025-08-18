@@ -20,7 +20,7 @@ public class Card extends BaseEntity {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false) // Adjust the column name to match the database naming convention
+    @JoinColumn(name = "user_id", nullable = false) 
     private User user;
 
     @Column(nullable = false)

@@ -141,7 +141,7 @@ public class ItemService {
             Item savedItem = itemRepository.save(item);
             log.info("Listing saved");
 
-            // Create an empty rating for the new product
+            
             RatingDTO productRating = new RatingDTO();
             productRating.setEntityId(savedItem.getId().toString());
             productRating.setEntityType("PRODUCT");
@@ -149,7 +149,7 @@ public class ItemService {
             productRating.setNumRatings(0);
             RatingDTO savedRating = createRating(productRating);
 
-            // Update the item with the rating ID
+            
             savedItem.setRatingId(savedRating.getId());
             itemRepository.save(savedItem);
             return ItemMapper.toDTO(savedItem);
@@ -210,17 +210,17 @@ public class ItemService {
                     () -> new ResourceNotFoundException("Item", "id", itemId.toString())
             );
 
-            // Soft delete by setting the deleted flag to true
+            
             item.setDeleted(true);
             itemRepository.save(item);
 
-            // Delete the cover image from Cloudinary
+            
             if (item.getImageUrl() != null && !item.getImageUrl().isEmpty()) {
                 String publicId = cloudinaryService.extractPublicIdFromUrl(item.getImageUrl());
                 cloudinaryService.deleteFile(publicId, imageFolder);
             }
 
-            // Delete the additional images from Cloudinary
+            
             if (item.getSubImageUrl1() != null && !item.getSubImageUrl1().isEmpty()) {
                 String publicId1 = cloudinaryService.extractPublicIdFromUrl(item.getSubImageUrl1());
                 cloudinaryService.deleteFile(publicId1, imageFolder);

@@ -35,7 +35,7 @@ public class ItemController {
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
-    // New endpoint to fetch items by seller ID
+    
     @GetMapping("/seller/{sellerId}")
     public ResponseEntity<List<ItemDTO>> getItemsBySellerId(@PathVariable String sellerId) {
         List<ItemDTO> items = itemService.getItemsByUserId(sellerId);

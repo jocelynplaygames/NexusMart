@@ -11,5 +11,5 @@ public class Item {
     private String sellerId;
     private String imageUrl;
     private boolean deleted;
-    // Getters and setters
+    
 }

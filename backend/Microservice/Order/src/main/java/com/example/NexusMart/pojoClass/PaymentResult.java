@@ -6,7 +6,7 @@ public class PaymentResult {
     private Long cartId;
     private String token;
 
-    // Constructors, getters, and setters
+    
     public PaymentResult(Long orderId, boolean paymentSuccessful, Long cartId, String token) {
         this.orderId = orderId;
         this.paymentSuccessful = paymentSuccessful;

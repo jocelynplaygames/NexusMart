@@ -17,7 +17,7 @@ public class ResponseTraceFilter {
     public GlobalFilter postGlobalFilter() {
         return (exchange, chain) -> chain.filter(exchange).then(Mono.fromRunnable(() -> {
             addCorsHeadersIfMissing(exchange);
-//            log.info("Response headers: {}", exchange.getResponse().getHeaders());
+
         }));
     }
 
@@ -31,7 +31,7 @@ public class ResponseTraceFilter {
             headers.set("Vary", "Origin");
         }
 
-        // Ensure the "Access-Control-Allow-Credentials" header is set to "true" only once
+        
         headers.set("Access-Control-Allow-Credentials", "true");
     }
 }

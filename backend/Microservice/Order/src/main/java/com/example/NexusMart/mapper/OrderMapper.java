@@ -48,9 +48,9 @@ public class OrderMapper {
         orderDTO.setLastFourDigit(order.getLastFourDigit());
         orderDTO.setShippingMethodId(order.getShippingMethod().getId());
         orderDTO.setShippingMethodName(order.getShippingMethod().getName());
-        orderDTO.setShippingCost(order.getShippingMethod().getPrice()); // Include shipping cost
+        orderDTO.setShippingCost(order.getShippingMethod().getPrice()); 
 
-        // Convert OrderItems to OrderItemDTOs
+        
         List<OrderItemDTO> orderItems = order.getOrderItems().stream()
                 .map(this::toOrderItemDTO)
                 .collect(Collectors.toList());
@@ -81,7 +81,7 @@ public class OrderMapper {
         ShippingMethod shippingMethod = getShippingMethodById(shippingMethodId);
         order.setShippingMethod(shippingMethod);
 
-        // Convert OrderItemDTOs to OrderItems
+        
         List<OrderItem> orderItems = orderDTO.getOrderItems().stream()
                 .map(orderItemDTO -> {
                     OrderItem orderItem = new OrderItem();

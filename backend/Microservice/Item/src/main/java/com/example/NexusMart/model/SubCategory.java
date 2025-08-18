@@ -16,15 +16,15 @@ public class SubCategory extends BaseEntity implements Serializable {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "main_category_id", nullable = false) // Corrected JoinColumn name to match the database
+    @JoinColumn(name = "main_category_id", nullable = false) 
     private MainCategory mainCategory;
 
     @Column(nullable = false)
     private String name;
 
     @Column(name = "image_url", nullable = false)
-    private String imageUrl; // Added imageUrl field
+    private String imageUrl; 
 
-    // Getters and setters are inherited from BaseEntity
+    
 }
 
