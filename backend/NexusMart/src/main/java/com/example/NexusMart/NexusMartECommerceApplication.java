@@ -1,4 +1,4 @@
-// File: backend/NexusMart/src/main/java/com/example/NexusMart/XianweiECommerceApplication.java
+// File: backend/NexusMart/src/main/java/com/example/NexusMart/NexusMartECommerceApplication.java
 package com.example.NexusMart;
 
 import org.springframework.boot.SpringApplication;
