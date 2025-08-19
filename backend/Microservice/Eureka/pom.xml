@@ -72,7 +72,7 @@
 				<version>3.4.1</version>
 				<configuration>
 					<to>
-						<image>xianwei/${project.artifactId}:v1</image>
+						<image>NexusMart/${project.artifactId}:v1</image>
 					</to>
 				</configuration>
 			</plugin>

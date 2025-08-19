@@ -370,7 +370,7 @@ services:
       service: network-deploy-service
 
   configserver:
-    image: "xianwei/configserver:v1"
+    image: "NexusMart/configserver:v1"
     container_name: configserver
     ports:
       - "8090:8090"
@@ -395,7 +395,7 @@ services:
       - redis-sentinel3
 
   eurekaserver1:
-    image: "xianwei/eurekaserver:v1"
+    image: "NexusMart/eurekaserver:v1"
     container_name: eurekaserver1
     ports:
       - "8761:8761"
@@ -425,7 +425,7 @@ services:
       EUREKA_SERVER_CIRCUITBREAKER_ENABLED: "true"
 
   eurekaserver2:
-    image: "xianwei/eurekaserver:v1"
+    image: "NexusMart/eurekaserver:v1"
     container_name: eurekaserver2
     ports:
       - "8762:8762"
@@ -455,7 +455,7 @@ services:
       EUREKA_SERVER_CIRCUITBREAKER_ENABLED: "true"
 
   eurekaserver3:
-    image: "xianwei/eurekaserver:v1"
+    image: "NexusMart/eurekaserver:v1"
     container_name: eurekaserver3
     ports:
       - "8763:8763"
@@ -652,7 +652,7 @@ services:
       retries: 10
 
   user:
-    image: "xianwei/user:v1"
+    image: "NexusMart/user:v1"
     container_name: user
     ports:
       - "8070:8070"
@@ -679,7 +679,7 @@ services:
       service: microservice-eureka-config
 
   item:
-    image: "xianwei/item:v1"
+    image: "NexusMart/item:v1"
     container_name: item
     ports:
       - "8040:8040"
@@ -706,7 +706,7 @@ services:
       service: microservice-eureka-config
 
   order:
-    image: "xianwei/order:v1"
+    image: "NexusMart/order:v1"
     container_name: order
     ports:
       - "8050:8050"
@@ -733,7 +733,7 @@ services:
       service: microservice-eureka-config
 
   payment:
-    image: "xianwei/payment:v1"
+    image: "NexusMart/payment:v1"
     container_name: payment
     ports:
       - "8060:8060"
@@ -758,7 +758,7 @@ services:
       service: microservice-eureka-config
 
   gatewayserver:
-    image: "xianwei/gatewayserver:v1"
+    image: "NexusMart/gatewayserver:v1"
     container_name: gatewayserver
     ports:
       - "8081:8080"

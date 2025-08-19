@@ -2,6 +2,7 @@
 ## 📋 Table of Contents
 
 - [🌟 Features](#-features)
+- [🏗️ Architecture Overview](#️-architecture-overview)
 - [🛠️ Technology Stack](#️-technology-stack)
 - [📁 Project Structure](#-project-structure)
 - [🚀 Quick Start](#-quick-start)
@@ -73,6 +74,44 @@ Databases (MySQL Master-Slave)
 
 ---
 
+## 🏗️ Architecture Overview
+
+### 📋 **Dual Architecture Support**
+
+This project supports **two distinct architectural patterns** to accommodate different development scenarios and team requirements:
+
+#### 🏢 **Monolithic Architecture** (`backend/NexusMart/`)
+- **Single Application**: All business logic in one Spring Boot application
+- **Single Database**: Direct connection to MySQL database
+- **Synchronous Communication**: Direct service calls
+- **Simple Deployment**: Single JAR package deployment
+- **Suitable For**: Small teams, rapid development, simple business requirements
+
+#### 🏗️ **Microservices Architecture** (`backend/Microservice/`)
+- **Service Decomposition**: 6 independent microservices
+- **Service Discovery**: Netflix Eureka cluster
+- **Asynchronous Communication**: Apache Kafka message queue
+- **API Gateway**: Spring Cloud Gateway with routing and security
+- **Configuration Management**: Spring Cloud Config Server
+- **Fault Tolerance**: Resilience4J circuit breakers
+- **Real-time Communication**: WebSocket for live updates
+- **Suitable For**: Large teams, complex business requirements, high scalability needs
+
+### 🔄 **Architecture Comparison**
+
+| Aspect | Monolithic | Microservices |
+|--------|------------|---------------|
+| **Deployment** | Single JAR | Multiple containers |
+| **Database** | Single database | Database per service |
+| **Service Discovery** | ❌ Not required | ✅ Eureka cluster |
+| **Message Queue** | ❌ Not used | ✅ Apache Kafka |
+| **API Gateway** | ❌ Not required | ✅ Spring Cloud Gateway |
+| **Configuration** | Local config | ✅ Config Server |
+| **Communication** | Synchronous calls | Async + Sync |
+| **Scalability** | Scale entire app | Independent scaling |
+| **Complexity** | Low | High |
+| **Team Size** | Small (5-10) | Large (20+) |
+
 ## 🛠️ Technology Stack
 
 ### 🎨 **Frontend**
@@ -85,20 +124,50 @@ Databases (MySQL Master-Slave)
 - **Yup 1.4.0** - Schema validation
 
 ### ⚙️ **Backend**
+
+#### **Monolithic Architecture** (`backend/NexusMart/`)
 - **Spring Boot 3.3.0** - Application framework
-- **Spring Cloud 2023.0.1** - Microservices toolkit
-- **Java 17** - Programming language
 - **Spring Security** - Authentication & authorization
 - **Spring Data JPA** - Data access layer
 - **Spring WebFlux** - Reactive programming
+- **Keycloak** - Identity & access management
+- **Cloudinary** - Cloud image storage
+- **RabbitMQ (AMQP)** - Message queue (optional)
+
+#### **Microservices Architecture** (`backend/Microservice/`)
+- **Spring Boot 3.3.0** - Application framework
+- **Spring Cloud 2023.0.1** - Microservices toolkit
+- **Spring Security** - Authentication & authorization
+- **Spring Data JPA** - Data access layer
+- **Spring WebFlux** - Reactive programming
+- **Netflix Eureka** - Service discovery
+- **Spring Cloud Gateway** - API gateway
+- **Spring Cloud Config** - Configuration management
+- **Apache Kafka** - Message queue
+- **Resilience4J** - Circuit breakers & fault tolerance
+- **WebSocket** - Real-time communication
 
 ### 🗄️ **Data & Storage**
+
+#### **Monolithic Architecture**
+- **MySQL 8.0** - Single database for all business data
+- **Redis 7.0.9** - Caching & session storage (optional)
+- **Cloudinary** - Cloud image storage
+
+#### **Microservices Architecture**
 - **MySQL 8.0** - Primary database with master-slave replication
 - **Redis 7.0.9** - Caching & session storage
-- **Apache Kafka 7.3.2** - Message queue
+- **Apache Kafka 7.3.2** - Message queue for service communication
 - **Cloudinary** - Cloud image storage
 
 ### 🔧 **Infrastructure**
+
+#### **Monolithic Architecture**
+- **Docker** - Containerization (optional)
+- **JAR Deployment** - Traditional deployment method
+- **Keycloak** - Identity & access management
+
+#### **Microservices Architecture**
 - **Docker** - Containerization
 - **Docker Compose** - Multi-container orchestration
 - **Netflix Eureka** - Service discovery
@@ -115,6 +184,50 @@ Databases (MySQL Master-Slave)
 ---
 
 ## 📁 Project Structure
+
+### 🏗️ **Architecture File Structure**
+
+#### **Monolithic Architecture** (`backend/NexusMart/`)
+```
+backend/NexusMart/
+├── 📄 NexusMartECommerceApplication.java          # Main startup class
+├── 📁 controller/                               # All REST controllers
+│   ├── 📄 OrderController.java                  # Order management
+│   ├── 📄 UserController.java                   # User management
+│   ├── 📄 ItemController.java                   # Product management
+│   ├── 📄 CartController.java                   # Shopping cart
+│   ├── 📄 PaymentController.java                # Payment processing
+│   └── 📄 ...                                   # Other controllers
+├── 📁 service/                                  # Business logic layer
+│   ├── 📄 OrderService.java                     # Order business logic
+│   ├── 📄 UserService.java                      # User business logic
+│   ├── 📄 ItemService.java                      # Product business logic
+│   └── 📄 ...                                   # Other services
+├── 📁 repository/                               # Data access layer
+│   ├── 📄 OrderRepository.java                  # Order data access
+│   ├── 📄 UserRepository.java                   # User data access
+│   ├── 📄 ItemRepository.java                   # Product data access
+│   └── 📄 ...                                   # Other repositories
+├── 📁 model/                                    # Entity models
+│   ├── 📄 Order.java                            # Order entity
+│   ├── 📄 User.java                             # User entity
+│   ├── 📄 Item.java                             # Product entity
+│   └── 📄 ...                                   # Other entities
+└── 📁 config/                                   # Configuration classes
+```
+
+#### **Microservices Architecture** (`backend/Microservice/`)
+```
+backend/Microservice/
+├── 📁 Eureka/                                   # Service discovery
+├── 📁 Config/                                   # Configuration server
+├── 📁 Gateway/                                  # API gateway
+├── 📁 User/                                     # User service
+├── 📁 Item/                                     # Product service
+├── 📁 Order/                                    # Order service
+├── 📁 Payment/                                  # Payment service
+└── 📁 docker-compose/                           # Container orchestration
+```
 
 ### 🏗️ **Overall Architecture Overview**
 
@@ -536,42 +649,83 @@ AWS EKS → Cloud Infrastructure → Auto Scaling
 - MySQL 8.0
 - Redis 7.0
 
+
 ### 🔧 **Local Development Setup**
 
-1. **Clone the repository**
+#### **Monolithic Architecture Setup**
 ```bash
+# 1. Clone the repository
 git clone https://github.com/yourusername/NexusMart.git
 cd NexusMart
-```
 
-2. **Start infrastructure services**
-```bash
-cd backend/Microservice/docker-compose/default
-docker-compose up -d
-```
+# 2. Start database
+docker run -d --name mysql-monolith -p 3306:3306 -e MYSQL_ROOT_PASSWORD=password mysql:8.0
 
-3. **Start backend microservices**
-```bash
-# Start each service individually
-cd backend/Microservice/User && mvn spring-boot:run
-cd backend/Microservice/Item && mvn spring-boot:run
-cd backend/Microservice/Order && mvn spring-boot:run
-cd backend/Microservice/Payment && mvn spring-boot:run
-cd backend/Microservice/Gateway && mvn spring-boot:run
-```
+# 3. Start monolithic application
+cd backend/NexusMart
+mvn spring-boot:run
 
-4. **Start frontend application**
-```bash
+# 4. Start frontend
 cd frontend
 npm install
 npm start
+
+# 5. Access the application
+# Frontend: http://localhost:3000
+# Backend: http://localhost:8080
 ```
 
-5. **Access the application**
-- Frontend: http://localhost:3000
-- API Gateway: http://localhost:8081
-- Grafana: http://localhost:3000
-- Keycloak: http://localhost:8080
+#### **Microservices Architecture Setup**
+```bash
+# 1. Clone the repository
+git clone https://github.com/yourusername/NexusMart.git
+cd NexusMart
+
+# 2. Start infrastructure services (Database, Redis, Kafka, etc.)
+cd backend/Microservice/docker-compose/default
+docker-compose up -d
+
+# 3. Start microservices (in separate terminals)
+# Terminal 1: Start Eureka (Service Discovery)
+cd backend/Microservice/Eureka
+mvn spring-boot:run
+
+# Terminal 2: Start Config Server
+cd backend/Microservice/Config
+mvn spring-boot:run
+
+# Terminal 3: Start API Gateway
+cd backend/Microservice/Gateway
+mvn spring-boot:run
+
+# Terminal 4: Start User Service
+cd backend/Microservice/User
+mvn spring-boot:run
+
+# Terminal 5: Start Item Service
+cd backend/Microservice/Item
+mvn spring-boot:run
+
+# Terminal 6: Start Order Service
+cd backend/Microservice/Order
+mvn spring-boot:run
+
+# Terminal 7: Start Payment Service
+cd backend/Microservice/Payment
+mvn spring-boot:run
+
+# 4. Start frontend application
+cd frontend
+npm install
+npm start
+
+# 5. Access the application
+# Frontend: http://localhost:3000
+# API Gateway: http://localhost:8081
+# Eureka Dashboard: http://localhost:8761
+# Grafana: http://localhost:3000
+# Keycloak: http://localhost:8080
+```
 
 ---
 
@@ -683,3 +837,43 @@ kubectl get ingress
 - **EKS**: For Kubernetes-based deployment
 - **RDS**: For managed MySQL databases
 - **ElastiCache**: For managed Redis clusters
+
+---
+
+## 🎯 **Architecture Summary**
+
+### 🏗️ **Why Dual Architecture?**
+
+This project demonstrates **two architectural approaches** to help developers understand the trade-offs and choose the right architecture for their specific needs:
+
+#### **Monolithic Architecture Benefits**
+- ✅ **Simple Development**: Single codebase, easy to understand
+- ✅ **Quick Setup**: Minimal infrastructure requirements
+- ✅ **Cost Effective**: Lower operational costs
+- ✅ **Easy Testing**: Integrated testing environment
+- ✅ **Rapid Prototyping**: Fast development cycles
+
+#### **Microservices Architecture Benefits**
+- ✅ **High Scalability**: Independent service scaling
+- ✅ **Fault Tolerance**: Isolated failures
+- ✅ **Technology Diversity**: Different tech stacks per service
+- ✅ **Team Independence**: Parallel development
+- ✅ **Continuous Deployment**: Independent service updates
+
+### 🚀 **Getting Started Recommendations**
+
+**For New Teams/Projects:**
+1. Start with **Monolithic Architecture** for rapid development
+2. Focus on business logic and user experience
+3. Scale up when needed
+
+**For Experienced Teams/Large Projects:**
+1. Use **Microservices Architecture** from the beginning
+2. Implement proper monitoring and observability
+3. Plan for distributed system challenges
+
+### 📚 **Learning Path**
+
+1. **Beginner**: Start with monolithic architecture to understand basic concepts
+2. **Intermediate**: Study microservices patterns and communication
+3. **Advanced**: Implement distributed patterns and observability

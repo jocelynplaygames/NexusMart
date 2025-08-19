@@ -12,7 +12,7 @@
 	<artifactId>NexusMart</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>NexusMart</name>
-	<description>Xianwei&apos;s Microserivces FullStack ECommerce Project</description>
+	<description>NexusMart&apos;s Microserivces FullStack ECommerce Project</description>
 	<properties>
 		<java.version>17</java.version>
 		<spring-cloud.version>2023.0.1</spring-cloud.version>
