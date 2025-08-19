@@ -18,6 +18,14 @@ import org.springframework.security.web.authentication.session.RegisterSessionAu
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
 import org.springframework.web.cors.CorsConfigurationSource;
 
+
+//安全过滤器链配置: 定义HTTP请求的安全规则
+//JWT认证: 配置OAuth2资源服务器，验证JWT令牌
+//权限控制: 定义不同API端点的访问权限
+//CORS配置: 处理跨域请求
+//角色映射: 将Keycloak角色转换为Spring Security权限
+
+//调用：前端发送HTTP请求时自动拦截
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -41,20 +49,28 @@ public class SecurityConfig {
     }
     //将外部定义的跨域配置（CorsConfigurationSource）引入到SecurityConfig类中，供后续配置 Spring Security 的跨域规则使用
 
+
+//它的作用是通过 HttpSecurity 对象定义整个应用的安全规则（如接口访问权限、认证方式、跨域设置等），最终生成一个 SecurityFilterChain（安全过滤器链），
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        //HttpSecurity http 是 Spring Security 提供的配置对象，通过它可以链式调用各种方法
         http
                 // 1. 调用 Spring Security 的 CORS 配置方法，用于开启并配置跨域支持
                 .cors(cors -> cors.configurationSource(corsConfigurationSource))
+                //.cors()方法需要一个CorsConfigurer类型的参数（函数式接口）
+                //调用cors对象的configurationSource方法，设置跨域配置的数据源为corsConfigurationSource（之前注入的跨域规则）。
                 //->哪些前端域名访问后端的规则，已经定义在corsConfigurationSource里了，现在把这些规则应用到当前的安全配置中
+//箭头左边是 “Spring 给我们的配置工具”，右边是 “我们用这个工具做什么配置”。
 
                 // 2. 配置接口访问权限（核心）
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
+                // authorizeHttpRequests()需要一个AuthorizationManagerRequestMatcherRegistry类型的参数（函数式接口），用于配置接口访问权限
+                //authorizeRequests：是AuthorizationManagerRequestMatcherRegistry对象（权限配置器）。.requestMatchers(...)、.hasRole(...)等是调用该对象的方法
                 //->接下来要定义 “访问某个接口需要满足什么条件”
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")  // /api/admin下的接口需要ADMIN角色
                         .requestMatchers(HttpMethod.GET, "/api/user/**").permitAll()  // GET方式访问/api/user/**允许匿名
                         .requestMatchers(HttpMethod.GET, "/api/feedback/**").permitAll()  // GET方式访问/api/feedback/**允许匿名
-                        .requestMatchers(HttpMethod.POST, "/api/item").authenticated()  // POST /api/item需要登录（已认证）
+                        .requestMatchers(HttpMethod.POST, "/api/item").authenticated()  // POST /api/item需要登录
                         .requestMatchers(HttpMethod.PUT, "/api/item/**").authenticated()  // PUT /api/item/**需要登录
                         .requestMatchers(HttpMethod.DELETE, "/api/item/**").authenticated()  // DELETE /api/item/**需要登录
                         .requestMatchers("/api/user/{id}").authenticated()  // 访问用户详情需要登录
@@ -63,7 +79,8 @@ public class SecurityConfig {
                 )
                 // 3. 关闭CSRF（跨站请求伪造）保护，因前后端分离项目中，前端通常通过 token 认证，无需 CSRF 令牌。
                 .csrf(AbstractHttpConfigurer::disable)
-                
+                //等价于 csrf -> AbstractHttpConfigurer.disable(csrf)，即关闭 CSRF 保护
+
                 // 4. 配置OAuth2资源服务器（基于JWT）
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(jwt -> jwt
@@ -87,13 +104,14 @@ public class SecurityConfig {
 //这个过滤器链会拦截所有 HTTP 请求，按照前面定义的规则（跨域、权限、JWT 验证等）进行处理。
 
 
-// 例如，当前端发送GET /api/orders/123请求并携带 JWT 时：
-
-// 1.过滤器链会拦截请求，检查是否有Bearer {jwt}。
-// 2.调用jwtAuthenticationConverter解析 JWT，得到用户 ID 和角色（如ROLE_USER）。
-// 3.根据.authorizeHttpRequests中定义的规则（如/api/orders/**需要authenticated()），判断该用户是否有权限访问。
-// 4.验证通过则放行请求，否则返回 401（未认证）或 403（权限不足）。
-
+// 当前端发送请求：
+// GET /api/user/123
+// Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
+// SecurityConfig会：
+// 1. 验证JWT令牌有效性
+// 2. 提取用户角色信息
+// 3. 检查是否有权限访问 /api/user/**
+// 4. 根据配置决定是否放行
 
 
     @Bean
@@ -119,3 +137,16 @@ public class SecurityConfig {
     //统一权限格式。Spring Security 默认要求角色以ROLE_为前缀（如ROLE_ADMIN）
     //该配置确保从 JWT 中解析的角色（如ADMIN）会被自动添加前缀并转为大写
 }
+
+// 1. 用户在前端点击"查看订单"
+// 2. OrderService.js 调用 fetchOrder(orderId)
+// 3. 从Redux获取JWT令牌
+// 4. 发送HTTP请求：GET /api/orders/123
+//     Headers: Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
+// 5. SecurityConfig 拦截请求
+// 6. 验证JWT令牌有效性
+// 7. 检查用户权限（是否有权访问订单）
+// 8. 验证通过，请求到达 OrderController
+// 9. OrderController 调用 OrderService.getOrder(orderId)
+// 10. OrderService 处理业务逻辑
+// 11. 返回订单数据给前端
